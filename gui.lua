@@ -1,12 +1,1952 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+-- ╔══════════════════════════════════════════════════════════════════════════╗
+-- ║        CRYSTAL HUB v6.0 - UNIVERSAL EDITION (Mobile + PC)             ║
+-- ║     Auto-Detect Platform | 200+ Functions | Cross-Platform Support    ║
+-- ╚══════════════════════════════════════════════════════════════════════════╝
 
-]]--
+----------------------------------------------------------------------------------
+-- SECTION 1: PLATFORM DETECTION
+----------------------------------------------------------------------------------
 
-local function v0(v172) local v173,v174=pcall(function() return game:GetService(v172);end);return v173 and v174 ;end local v1=v0("Players");local v2=v0("RunService");local v3=v0("UserInputService");local v4=v0("TweenService");local v5=v0("Workspace");local v6=v0("Lighting");local v7=v0("ReplicatedStorage");local v8=v0("TeleportService");if ( not v1 or  not v2 or  not v4) then return;end local v9=v1.LocalPlayer;if  not v9 then return;end local v10=v5.CurrentCamera;local v11=v9:GetMouse();local v12={IsMobile=false,IsPC=false,IsConsole=false,HasTouch=false,HasKeyboard=false,HasGamepad=false,ScreenSize=Vector2.new(1920,1080),Scale=1};local function v13() v12.HasTouch=v3.TouchEnabled;v12.HasKeyboard=v3.KeyboardEnabled;v12.HasGamepad=v3.GamepadEnabled;local v181=v10.ViewportSize;v12.ScreenSize=v181;if (v12.HasTouch and  not v12.HasKeyboard) then v12.IsMobile=true;v12.Scale=((math.min(v181.X,v181.Y)<800) and 0.8) or 1 ;elseif (v12.HasGamepad and  not v12.HasKeyboard) then v12.IsConsole=true;v12.Scale=1.2;else v12.IsPC=true;v12.Scale=1;end print(string.format("[Crystal] Platform: %s | Touch: %s | Keyboard: %s | Size: %dx%d",(v12.IsMobile and "MOBILE") or (v12.IsConsole and "CONSOLE") or "PC" ,tostring(v12.HasTouch),tostring(v12.HasKeyboard),math.floor(v181.X),math.floor(v181.Y)));end v13();local function v14() if gethui then local v863,v864=pcall(gethui);if (v863 and v864) then return v864;end end local v183,v184=pcall(function() return game:GetService("CoreGui");end);if (v183 and v184) then local v865=Instance.new("ScreenGui");local v866=pcall(function() v865.Parent=v184;end);v865:Destroy();if v866 then return v184;end end return v9:FindFirstChild("PlayerGui") or game ;end local v15=v14();pcall(function() local v185={v9:FindFirstChild("PlayerGui")};local v186,v187=pcall(function() return game:GetService("CoreGui");end);if (v186 and v187) then table.insert(v185,v187);end if gethui then local v867,v868=pcall(gethui);if v867 then table.insert(v185,v868);end end for v570,v571 in ipairs(v185) do if (v571 and v571:FindFirstChild("CrystalHubV6")) then v571:FindFirstChild("CrystalHubV6"):Destroy();end end end);local v16={Version="6.0.0",Platform=(v12.IsMobile and "Mobile") or (v12.IsConsole and "Console") or "PC" ,CurrentTab="Combat",CurrentTheme="Crystal",Minimized=false,Dragging=false,ESPObjects={},TracerObjects={},ChamsObjects={},HitboxParts={},OriginalTransparencies={},TouchButtons={},MobileMenu=nil,ActiveCount=0};local v17={Crystal={Name="Crystal Blue",Primary=Color3.fromRGB(20,25,40),Secondary=Color3.fromRGB(30,35,55),Accent=Color3.fromRGB(100,180,255),Text=Color3.fromRGB(240,245,255),TextSecondary=Color3.fromRGB(180,190,210),Background=Color3.fromRGB(15,18,30),Glass=Color3.fromRGB(40,50,80),GlassBorder=Color3.fromRGB(100,150,220),ToggleOn=Color3.fromRGB(80,160,255),ToggleOff=Color3.fromRGB(60,70,90),Success=Color3.fromRGB(80,220,140),Error=Color3.fromRGB(255,100,100),Warning=Color3.fromRGB(255,200,80)},Amethyst={Name="Amethyst",Primary=Color3.fromRGB(25,20,40),Secondary=Color3.fromRGB(35,30,55),Accent=Color3.fromRGB(180,100,255),Text=Color3.fromRGB(245,240,255),TextSecondary=Color3.fromRGB(190,180,210),Background=Color3.fromRGB(18,15,30),Glass=Color3.fromRGB(50,40,80),GlassBorder=Color3.fromRGB(150,100,220),ToggleOn=Color3.fromRGB(160,80,255),ToggleOff=Color3.fromRGB(70,60,90),Success=Color3.fromRGB(80,220,140),Error=Color3.fromRGB(255,100,100),Warning=Color3.fromRGB(255,200,80)},Emerald={Name="Emerald",Primary=Color3.fromRGB(20,30,25),Secondary=Color3.fromRGB(30,45,35),Accent=Color3.fromRGB(80,220,140),Text=Color3.fromRGB(240,255,245),TextSecondary=Color3.fromRGB(180,210,190),Background=Color3.fromRGB(15,22,18),Glass=Color3.fromRGB(40,60,50),GlassBorder=Color3.fromRGB(100,180,140),ToggleOn=Color3.fromRGB(80,220,140),ToggleOff=Color3.fromRGB(60,80,70),Success=Color3.fromRGB(80,220,140),Error=Color3.fromRGB(255,100,100),Warning=Color3.fromRGB(255,200,80)},Ruby={Name="Ruby",Primary=Color3.fromRGB(40,20,25),Secondary=Color3.fromRGB(55,30,35),Accent=Color3.fromRGB(255,100,120),Text=Color3.fromRGB(255,240,245),TextSecondary=Color3.fromRGB(210,180,190),Background=Color3.fromRGB(30,15,18),Glass=Color3.fromRGB(80,40,50),GlassBorder=Color3.fromRGB(220,100,120),ToggleOn=Color3.fromRGB(255,100,120),ToggleOff=Color3.fromRGB(90,60,70),Success=Color3.fromRGB(80,220,140),Error=Color3.fromRGB(255,100,100),Warning=Color3.fromRGB(255,200,80)},Topaz={Name="Topaz",Primary=Color3.fromRGB(35,30,20),Secondary=Color3.fromRGB(50,45,30),Accent=Color3.fromRGB(255,200,80),Text=Color3.fromRGB(255,250,240),TextSecondary=Color3.fromRGB(210,200,180),Background=Color3.fromRGB(25,22,15),Glass=Color3.fromRGB(70,60,40),GlassBorder=Color3.fromRGB(200,160,80),ToggleOn=Color3.fromRGB(255,200,80),ToggleOff=Color3.fromRGB(80,70,55),Success=Color3.fromRGB(80,220,140),Error=Color3.fromRGB(255,100,100),Warning=Color3.fromRGB(255,200,80)}};local v18=v17.Crystal;local function v19(v188) return v18[v188] or Color3.fromRGB(255,255,255) ;end local v20={Aimbot={Enabled=false,FOV=180,Smooth=0.2,Part="Head",TeamCheck=false,WallCheck=true,Prediction=0.165,Radius=500,CustomRadius=false,CustomRadiusValue=500,ShowFOV=true},Triggerbot={Enabled=false,Delay=0,MaxDist=500,TeamCheck=false},SilentAim={Enabled=false,FOV=180,Part="Head",HitChance=100},KillAura={Enabled=false,Range=15,TeamCheck=false,Delay=0.1},HitboxExtender={Enabled=false,Size=5,Transparency=0.7},AntiAim={Enabled=false,Type="Roll",Speed=5},AutoParry={Enabled=false,Range=10},Reach={Enabled=false,Distance=15},CriticalHits={Enabled=false,Multiplier=2},AntiKnockback={Enabled=false},AutoShoot={Enabled=false,Delay=0.1},AutoBlock={Enabled=false},NoRecoil={Enabled=false},NoSpread={Enabled=false},RapidFire={Enabled=false,Rate=0.05},Speed={Enabled=false,Value=16},Fly={Enabled=false,Speed=50,Noclip=false},Noclip={Enabled=false},InfJump={Enabled=false},LongJump={Enabled=false,Power=100},BunnyHop={Enabled=false,Speed=40},Jetpack={Enabled=false,Power=100},WallClimb={Enabled=false},Glide={Enabled=false},Spider={Enabled=false},CFrameSpeed={Enabled=false,Value=100},Blink={Enabled=false,Distance=20},Slide={Enabled=false,Speed=50},Dash={Enabled=false,Distance=30},SuperJump={Enabled=false,Power=200},HighJump={Enabled=false,Height=100},GodMode={Enabled=false},AntiVoid={Enabled=false,Height= -500},NoFall={Enabled=false},AntiAFK={Enabled=false},AutoClick={Enabled=false,CPS=10},AntiGrab={Enabled=false},AutoRevive={Enabled=false},Regeneration={Enabled=false,Rate=5},InfiniteStamina={Enabled=false},ESP={Enabled=false,Box=true,Name=true,Health=true,Distance=true,TeamCheck=false,MaxDist=2000,Glow=false,Outline=true,Animated=true},Tracers={Enabled=false,Origin="Bottom",TeamCheck=false},Chams={Enabled=false,TeamCheck=false,Transparency=0.5},Fullbright={Enabled=false},Xray={Enabled=false,Transparency=0.7},NoFog={Enabled=false},SkeletonESP={Enabled=false},Freecam={Enabled=false,Speed=50},FOVChanger={Enabled=false,Value=70},NightVision={Enabled=false},ChatSpam={Enabled=false,Message="Crystal Hub",Delay=3},TimeChange={Enabled=false,Time=14},Gravity={Enabled=false,Value=196.2},AutoCollect={Enabled=false,Range=50},NoCooldown={Enabled=false},RainbowMode={Enabled=false},AutoFarm={Enabled=false}};local function v21(v189,v190,v191,v192,v193) if ( not v189 or  not v189.Parent) then return nil;end local v194,v195=pcall(function() local v572=TweenInfo.new(v191 or 0.3 ,v192 or Enum.EasingStyle.Quart ,v193 or Enum.EasingDirection.Out );local v573=v4:Create(v189,v572,v190);v573:Play();return v573;end);return (v194 and v195) or nil ;end local function v22(v196) local v197,v198,v199=pcall(function() local v574,v575=v10:WorldToViewportPoint(v196);return Vector2.new(v574.X,v574.Y),v575;end);return (v197 and v198) or Vector2.zero ,(v197 and v199) or false ;end local function v23(v200) if (v200 and v200.Character) then local v869=v200.Character:FindFirstChildOfClass("Humanoid");return v869 and (v869.Health>0) ;end return false;end local function v24() local v201=v9.Character;return v201 and v201:FindFirstChildOfClass("Humanoid") ;end local function v25() local v202=v9.Character;return v202 and v202:FindFirstChild("HumanoidRootPart") ;end local function v26(v203,v204) local v205,v206=v203 and v203.Character ,v204 and v204.Character ;if (v205 and v206) then local v870,v871=v205:FindFirstChild("HumanoidRootPart"),v206:FindFirstChild("HumanoidRootPart");if (v870 and v871) then return (v870.Position-v871.Position).Magnitude;end end return math.huge;end local function v27() return (v20.Aimbot.CustomRadius and v20.Aimbot.CustomRadiusValue) or v20.Aimbot.Radius ;end local function v28(v207,v208,v209,v210,v211) local v212,v213=nil,v207 or 8999999488 ;local v214=v3:GetMouseLocation();local v215=v211 or v27() ;for v576,v577 in ipairs(v1:GetPlayers()) do if ((v577~=v9) and v577.Character and v23(v577)) then if (v209 and (v577.Team==v9.Team)) then continue;end local v943=v577.Character:FindFirstChild(v208 or "Head" );if v943 then local v1008=v26(v9,v577);if (v1008>v215) then continue;end local v1009,v1010=v22(v943.Position);if v1010 then local v1050=(v214-v1009).Magnitude;if (v1050<v213) then if v210 then local v1105=Ray.new(v10.CFrame.Position,(v943.Position-v10.CFrame.Position).Unit * 1000 );local v1106=v5:FindPartOnRayWithIgnoreList(v1105,{v9.Character,v10});if (v1106 and v1106:IsDescendantOf(v577.Character)) then v212,v213=v577,v1050;end else v212,v213=v577,v1050;end end end end end end return v212,v213;end local v29=pcall(function() local v216=Drawing.new("Line");v216:Remove();end);local v30=Instance.new("ScreenGui");v30.Name="CrystalHubV6";v30.ResetOnSpawn=false;v30.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v30.IgnoreGuiInset=true;pcall(function() v30.Parent=v15;end);local v36=Instance.new("Frame");v36.Size=(v12.IsMobile and UDim2.new(0,280,1,0)) or UDim2.new(0,350,1,0) ;v36.Position=(v12.IsMobile and UDim2.new(0.5, -140,0,0)) or UDim2.new(1, -350,0,0) ;v36.BackgroundTransparency=1;v36.Parent=v30;Instance.new("UIListLayout",v36).Padding=UDim.new(0,10);local function v42(v218,v219,v220,v221) v221=v221 or "info" ;local v222={info=v19("Accent"),success=v19("Success"),error=v19("Error"),warning=v19("Warning")};local v223=Instance.new("Frame");v223.Size=(v12.IsMobile and UDim2.new(1,0,0,70)) or UDim2.new(0,300,0,80) ;v223.Position=(v12.IsMobile and UDim2.new(0,0, -1,0)) or UDim2.new(1,20,0,0) ;v223.BackgroundColor3=v19("Background");v223.BackgroundTransparency=0.1;v223.BorderSizePixel=0;v223.Parent=v36;Instance.new("UICorner",v223).CornerRadius=UDim.new(0,12);local v231=Instance.new("UIStroke",v223);v231.Color=v222[v221] or v19("Accent") ;v231.Thickness=2;v231.Transparency=0.3;local v235=Instance.new("TextLabel",v223);v235.Size=UDim2.new(1, -20,0,25);v235.Position=UDim2.new(0,10,0,10);v235.BackgroundTransparency=1;v235.Text=v218;v235.TextColor3=v222[v221];v235.TextSize=(v12.IsMobile and 12) or 14 ;v235.Font=Enum.Font.GothamBold;v235.TextXAlignment=Enum.TextXAlignment.Left;local v247=Instance.new("TextLabel",v223);v247.Size=UDim2.new(1, -20,0,35);v247.Position=UDim2.new(0,10,0,35);v247.BackgroundTransparency=1;v247.Text=v219;v247.TextColor3=v19("TextSecondary");v247.TextSize=(v12.IsMobile and 10) or 12 ;v247.Font=Enum.Font.Gotham;v247.TextXAlignment=Enum.TextXAlignment.Left;v247.TextWrapped=true;local v258=(v12.IsMobile and UDim2.new(0,0,0,10)) or UDim2.new(1, -320,0,0) ;v21(v223,{Position=v258},0.5);task.delay(v220 or 3 ,function() if v223.Parent then v21(v223,{BackgroundTransparency=1},0.4);task.wait(0.4);pcall(function() v223:Destroy();end);end end);end if v12.IsMobile then local v578=Instance.new("Frame");v578.Name="TouchPanel";v578.Size=UDim2.new(1,0,1,0);v578.BackgroundTransparency=1;v578.Parent=v30;local v583=Instance.new("TextButton");v583.Name="MenuToggle";v583.Size=UDim2.new(0,60,0,60);v583.Position=UDim2.new(0,10,0,10);v583.BackgroundColor3=v19("Accent");v583.BackgroundTransparency=0.2;v583.Text="💎";v583.TextSize=28;v583.TextColor3=v19("Text");v583.Parent=v578;Instance.new("UICorner",v583).CornerRadius=UDim.new(1,0);Instance.new("UIStroke",v583).Color=v19("GlassBorder");local function v595(v872,v873,v874,v875) local v876=Instance.new("TextButton");v876.Name=v872;v876.Size=UDim2.new(0,55,0,55);v876.Position=v874;v876.BackgroundColor3=v19("Secondary");v876.BackgroundTransparency=0.3;v876.Text=v873;v876.TextSize=22;v876.TextColor3=v19("Text");v876.Parent=v578;Instance.new("UICorner",v876).CornerRadius=UDim.new(1,0);local v887=Instance.new("UIStroke",v876);v887.Color=v19("GlassBorder");v887.Thickness=1.5;v887.Transparency=0.5;v876.MouseButton1Click:Connect(function() if v875 then pcall(v875);end end);v16.TouchButtons[v872]=v876;return v876;end v595("SpeedBtn","🏃",UDim2.new(0.5, -90,1, -80),function() v20.Speed.Enabled= not v20.Speed.Enabled;if v20.Speed.Enabled then v20.Speed.Value=50;end v42("Speed",(v20.Speed.Enabled and "ON") or "OFF" ,1,(v20.Speed.Enabled and "success") or "warning" );end);v595("FlyBtn","🦅",UDim2.new(0.5, -27,1, -80),function() v20.Fly.Enabled= not v20.Fly.Enabled;v42("Fly",(v20.Fly.Enabled and "ON") or "OFF" ,1,(v20.Fly.Enabled and "success") or "warning" );end);v595("NoclipBtn","👻",UDim2.new(0.5,35,1, -80),function() v20.Noclip.Enabled= not v20.Noclip.Enabled;v42("Noclip",(v20.Noclip.Enabled and "ON") or "OFF" ,1,(v20.Noclip.Enabled and "success") or "warning" );end);v595("ESPBtn","👁️",UDim2.new(1, -70,1, -80),function() v20.ESP.Enabled= not v20.ESP.Enabled;v42("ESP",(v20.ESP.Enabled and "ON") or "OFF" ,1,(v20.ESP.Enabled and "success") or "warning" );end);v595("GodBtn","❤️",UDim2.new(1, -70,0,10),function() v20.GodMode.Enabled= not v20.GodMode.Enabled;v42("God Mode",(v20.GodMode.Enabled and "ON") or "OFF" ,1,(v20.GodMode.Enabled and "success") or "warning" );end);local v596=Instance.new("TextButton");v596.Name="JumpBtn";v596.Size=UDim2.new(0,70,0,70);v596.Position=UDim2.new(1, -80,1, -160);v596.BackgroundColor3=v19("Accent");v596.BackgroundTransparency=0.2;v596.Text="⬆️";v596.TextSize=30;v596.TextColor3=v19("Text");v596.Parent=v578;Instance.new("UICorner",v596).CornerRadius=UDim.new(1,0);Instance.new("UIStroke",v596).Color=v19("GlassBorder");v596.MouseButton1Down:Connect(function() local v897=v24();if v897 then pcall(function() v897:ChangeState(Enum.HumanoidStateType.Jumping);end);end end);v16.MobileMenu=v578;end local v43,v44;if v12.IsMobile then v43=UDim2.new(0.95,0,0.85,0);v44=UDim2.new(0.025,0,0.075,0);else v43=UDim2.new(0,700,0,520);v44=UDim2.new(0.5, -350,0.5, -260);end local v45=Instance.new("Frame");v45.Name="Main";v45.Size=v43;v45.Position=v44;v45.BackgroundColor3=v19("Background");v45.BackgroundTransparency=0.08;v45.BorderSizePixel=0;v45.ClipsDescendants=true;v45.Visible=v12.IsPC;v45.Parent=v30;Instance.new("UICorner",v45).CornerRadius=UDim.new(0,(v12.IsMobile and 15) or 20 );local v57=Instance.new("UIStroke",v45);v57.Color=v19("GlassBorder");v57.Thickness=(v12.IsMobile and 1.5) or 2.5 ;v57.Transparency=0.3;local v61=Instance.new("Frame",v45);v61.Size=UDim2.new(1,0,1,0);v61.BackgroundTransparency=1;local v64=Instance.new("UIGradient",v61);v64.Rotation=45;v64.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,0.92),NumberSequenceKeypoint.new(0.5,0.88),NumberSequenceKeypoint.new(1,0.92)});local v67=(v12.IsMobile and 40) or 50 ;local v68=Instance.new("Frame",v45);v68.Size=UDim2.new(1,0,0,v67);v68.BackgroundColor3=v19("Primary");v68.BackgroundTransparency=0.4;v68.BorderSizePixel=0;Instance.new("UICorner",v68).CornerRadius=UDim.new(0,(v12.IsMobile and 15) or 20 );local v74=Instance.new("Frame",v68);v74.Size=UDim2.new(1,0,0,15);v74.Position=UDim2.new(0,0,1, -15);v74.BackgroundColor3=v19("Primary");v74.BackgroundTransparency=0.4;local v79=Instance.new("TextLabel",v68);v79.Size=UDim2.new(0.5,0,1,0);v79.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,0);v79.BackgroundTransparency=1;v79.Text="💎 Crystal Hub v6.0";v79.TextColor3=v19("Text");v79.TextSize=(v12.IsMobile and 14) or 18 ;v79.Font=Enum.Font.GothamBold;v79.TextXAlignment=Enum.TextXAlignment.Left;local v90=Instance.new("Frame",v68);v90.Size=UDim2.new(0,(v12.IsMobile and 60) or 50 ,0,20);v90.Position=UDim2.new(0.5, -25,0.5, -10);v90.BackgroundColor3=v19("Accent");v90.BackgroundTransparency=0.3;Instance.new("UICorner",v90).CornerRadius=UDim.new(0,10);local v96=Instance.new("TextLabel",v90);v96.Size=UDim2.new(1,0,1,0);v96.BackgroundTransparency=1;v96.Text=(v12.IsMobile and "📱 MOBILE") or "💻 PC" ;v96.TextColor3=v19("Text");v96.TextSize=(v12.IsMobile and 9) or 10 ;v96.Font=Enum.Font.GothamBold;local v103=Instance.new("Frame",v68);v103.Size=UDim2.new(0,(v12.IsMobile and 80) or 120 ,0,30);v103.Position=UDim2.new(1,(v12.IsMobile and  -90) or  -130 ,0.5, -15);v103.BackgroundTransparency=1;local function v107(v259,v260,v261,v262) local v263=Instance.new("TextButton",v103);v263.Size=UDim2.new(0,v262 or 30 ,0,v262 or 30 );v263.Position=UDim2.new(0,v259,0,0);v263.BackgroundColor3=v260;v263.BackgroundTransparency=0.3;v263.Text=v261;v263.TextColor3=v19("Text");v263.TextSize=(v12.IsMobile and 12) or 14 ;v263.Font=Enum.Font.GothamBold;Instance.new("UICorner",v263).CornerRadius=UDim.new(1,0);return v263;end local v108=v107(0,v19("Warning"),"—");local v109=v107((v12.IsMobile and 40) or 76 ,v19("Error"),"✕");v68.InputBegan:Connect(function(v274) if ((v274.UserInputType==Enum.UserInputType.MouseButton1) or (v274.UserInputType==Enum.UserInputType.Touch)) then v16.Dragging=true;v16.DragStart=v274.Position;v16.StartPos=v45.Position;v274.Changed:Connect(function() if (v274.UserInputState==Enum.UserInputState.End) then v16.Dragging=false;end end);end end);v3.InputChanged:Connect(function(v275) if (v16.Dragging and ((v275.UserInputType==Enum.UserInputType.MouseMovement) or (v275.UserInputType==Enum.UserInputType.Touch))) then local v903=v275.Position-v16.DragStart ;v45.Position=UDim2.new(v16.StartPos.X.Scale,v16.StartPos.X.Offset + v903.X ,v16.StartPos.Y.Scale,v16.StartPos.Y.Offset + v903.Y );end end);v108.MouseButton1Click:Connect(function() v16.Minimized= not v16.Minimized;local v277=(v16.Minimized and UDim2.new(v45.Size.X.Scale,v45.Size.X.Offset,0,v67)) or v43 ;v21(v45,{Size=v277},0.4,Enum.EasingStyle.Back);end);v109.MouseButton1Click:Connect(function() v21(v45,{Size=UDim2.new(0,0,0,0)},0.5,Enum.EasingStyle.Back);task.wait(0.5);pcall(function() v30:Destroy();end);end);if (v12.IsMobile and v16.MobileMenu) then v16.MobileMenu:FindFirstChild("MenuToggle").MouseButton1Click:Connect(function() v45.Visible= not v45.Visible;end);end local v110=(v12.IsMobile and 50) or 70 ;local v111=Instance.new("Frame",v45);v111.Size=UDim2.new(0,v110,1, -v67);v111.Position=UDim2.new(0,0,0,v67);v111.BackgroundColor3=v19("Secondary");v111.BackgroundTransparency=0.5;local v116=Instance.new("UIListLayout",v111);v116.Padding=UDim.new(0,(v12.IsMobile and 5) or 8 );v116.HorizontalAlignment=Enum.HorizontalAlignment.Center;local v120=Instance.new("UIPadding",v111);v120.PaddingTop=UDim.new(0,(v12.IsMobile and 10) or 20 );local v122={{Name="Combat",Icon="⚔️"},{Name="Movement",Icon="🏃"},{Name="Player",Icon="👤"},{Name="Render",Icon="👁️"},{Name="Utils",Icon="⚙️"}};local v123={};local v124={};local function v125(v278) local v279=(v12.IsMobile and 40) or 50 ;local v280=Instance.new("TextButton",v111);v280.Size=UDim2.new(0,v279,0,v279);v280.BackgroundColor3=v19("ToggleOff");v280.BackgroundTransparency=0.5;v280.Text="";Instance.new("UICorner",v280).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 15 );local v286=Instance.new("TextLabel",v280);v286.Size=UDim2.new(1,0,0.6,0);v286.Position=UDim2.new(0,0,0,(v12.IsMobile and 2) or 5 );v286.BackgroundTransparency=1;v286.Text=v278.Icon;v286.TextSize=(v12.IsMobile and 16) or 20 ;local v293=Instance.new("TextLabel",v280);v293.Size=UDim2.new(1,0,0.3,0);v293.Position=UDim2.new(0,0,0.65,0);v293.BackgroundTransparency=1;v293.Text=v278.Name;v293.TextColor3=v19("TextSecondary");v293.TextSize=(v12.IsMobile and 7) or 8 ;v293.Font=Enum.Font.GothamBold;v123[v278.Name]=v280;v280.MouseButton1Click:Connect(function() if (v16.CurrentTab~=v278.Name) then for v973,v974 in pairs(v123) do v21(v974,{BackgroundTransparency=0.5,BackgroundColor3=v19("ToggleOff")},0.3);end v21(v280,{BackgroundTransparency=0.3,BackgroundColor3=v19("Accent")},0.3);v16.CurrentTab=v278.Name;for v975,v976 in pairs(v124) do if v976 then v976.Visible=v975==v278.Name ;end end end end);end for v304,v305 in ipairs(v122) do v125(v305);end local v126=Instance.new("Frame",v45);v126.Size=UDim2.new(1, -v110,1, -v67);v126.Position=UDim2.new(0,v110,0,v67);v126.BackgroundTransparency=1;local v130=(v12.IsMobile and 45) or 55 ;local v131=(v12.IsMobile and 8) or 10 ;local function v132(v306,v307) local v308=Instance.new("Frame",v306);v308.Size=UDim2.new(1, -10,0,(v12.IsMobile and 25) or 35 );v308.BackgroundTransparency=1;local v311=Instance.new("TextLabel",v308);v311.Size=UDim2.new(0,(v12.IsMobile and 120) or 180 ,1,0);v311.Position=UDim2.new(0,5,0,0);v311.BackgroundTransparency=1;v311.Text="◆ "   .. v307 ;v311.TextColor3=v19("Accent");v311.TextSize=(v12.IsMobile and 11) or 13 ;v311.Font=Enum.Font.GothamBold;v311.TextXAlignment=Enum.TextXAlignment.Left;local v322=Instance.new("Frame",v308);v322.Size=UDim2.new(1,(v12.IsMobile and  -130) or  -190 ,0,2);v322.Position=UDim2.new(0,(v12.IsMobile and 125) or 185 ,0.5, -1);v322.BackgroundColor3=v19("Accent");v322.BackgroundTransparency=0.7;return v308;end local function v133(v327,v328,v329,v330,v331) local v332=Instance.new("Frame",v327);v332.Size=UDim2.new(1, -20,0,v130);v332.BackgroundColor3=v19("Secondary");v332.BackgroundTransparency=0.6;Instance.new("UICorner",v332).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 12 );local v337=Instance.new("TextLabel",v332);v337.Size=UDim2.new(1,(v12.IsMobile and  -60) or  -90 ,0,(v12.IsMobile and 18) or 22 );v337.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,(v12.IsMobile and 5) or 8 );v337.BackgroundTransparency=1;v337.Text=v328;v337.TextColor3=v19("Text");v337.TextSize=(v12.IsMobile and 11) or 13 ;v337.Font=Enum.Font.GothamBold;v337.TextXAlignment=Enum.TextXAlignment.Left;if  not v12.IsMobile then local v906=Instance.new("TextLabel",v332);v906.Size=UDim2.new(1, -90,0,16);v906.Position=UDim2.new(0,15,0,30);v906.BackgroundTransparency=1;v906.Text=v329 or "" ;v906.TextColor3=v19("TextSecondary");v906.TextSize=10;v906.Font=Enum.Font.Gotham;v906.TextXAlignment=Enum.TextXAlignment.Left;end local v348=(v12.IsMobile and 40) or 48 ;local v349=Instance.new("Frame",v332);v349.Size=UDim2.new(0,v348,0,v348 * 0.5 );v349.Position=UDim2.new(1, -v348-10 ,0.5, -(v348 * 0.25));v349.BackgroundColor3=(v330 and v19("ToggleOn")) or v19("ToggleOff") ;Instance.new("UICorner",v349).CornerRadius=UDim.new(1,0);local v354=v348 * 0.8 ;local v355=Instance.new("Frame",v349);v355.Size=UDim2.new(0,v354,0,v354);v355.Position=(v330 and UDim2.new(1, -v354-2 ,0.5, -v354/2 )) or UDim2.new(0,2,0.5, -v354/2 ) ;v355.BackgroundColor3=Color3.fromRGB(255,255,255);Instance.new("UICorner",v355).CornerRadius=UDim.new(1,0);local v360=Instance.new("TextButton",v332);v360.Size=UDim2.new(1,0,1,0);v360.BackgroundTransparency=1;v360.Text="";local v364=v330 or false ;v360.MouseButton1Click:Connect(function() v364= not v364;v21(v349,{BackgroundColor3=(v364 and v19("ToggleOn")) or v19("ToggleOff") },0.2);v21(v355,{Position=(v364 and UDim2.new(1, -v354-2 ,0.5, -v354/2 )) or UDim2.new(0,2,0.5, -v354/2 ) },0.3,Enum.EasingStyle.Back);if v331 then pcall(v331,v364);end end);return v332,function(v609) v364=v609;end;end local function v134(v365,v366,v367,v368,v369,v370) local v371=Instance.new("Frame",v365);v371.Size=UDim2.new(1, -20,0,(v12.IsMobile and 55) or 70 );v371.BackgroundColor3=v19("Secondary");v371.BackgroundTransparency=0.6;Instance.new("UICorner",v371).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 12 );local v376=Instance.new("TextLabel",v371);v376.Size=UDim2.new(0.5,0,0,(v12.IsMobile and 18) or 20 );v376.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,(v12.IsMobile and 5) or 8 );v376.BackgroundTransparency=1;v376.Text=v366;v376.TextColor3=v19("Text");v376.TextSize=(v12.IsMobile and 11) or 13 ;v376.Font=Enum.Font.GothamBold;v376.TextXAlignment=Enum.TextXAlignment.Left;local v387=Instance.new("TextLabel",v371);v387.Size=UDim2.new(0.5, -15,0,(v12.IsMobile and 18) or 20 );v387.Position=UDim2.new(0.5,0,0,(v12.IsMobile and 5) or 8 );v387.BackgroundTransparency=1;v387.Text=tostring(v369);v387.TextColor3=v19("Accent");v387.TextSize=(v12.IsMobile and 11) or 13 ;v387.Font=Enum.Font.GothamBold;v387.TextXAlignment=Enum.TextXAlignment.Right;local v397=Instance.new("Frame",v371);v397.Size=UDim2.new(1,(v12.IsMobile and  -20) or  -30 ,0,(v12.IsMobile and 10) or 8 );v397.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,(v12.IsMobile and 35) or 45 );v397.BackgroundColor3=v19("ToggleOff");Instance.new("UICorner",v397).CornerRadius=UDim.new(1,0);local v402=Instance.new("Frame",v397);v402.Size=UDim2.new((v369-v367)/(v368-v367) ,0,1,0);v402.BackgroundColor3=v19("Accent");Instance.new("UICorner",v402).CornerRadius=UDim.new(1,0);local v406=(v12.IsMobile and 20) or 16 ;local v407=Instance.new("Frame",v397);v407.Size=UDim2.new(0,v406,0,v406);v407.Position=UDim2.new((v369-v367)/(v368-v367) , -v406/2 ,0.5, -v406/2 );v407.BackgroundColor3=Color3.fromRGB(255,255,255);Instance.new("UICorner",v407).CornerRadius=UDim.new(1,0);local v412,v413=false,v369;local function v414(v610) local v611=math.clamp((v610.Position.X-v397.AbsolutePosition.X)/v397.AbsoluteSize.X ,0,1);v413=math.floor(v367 + ((v368-v367) * v611) + 0.5 );v402.Size=UDim2.new(v611,0,1,0);v407.Position=UDim2.new(v611, -v406/2 ,0.5, -v406/2 );v387.Text=tostring(v413);if v370 then pcall(v370,v413);end end v397.InputBegan:Connect(function(v615) if ((v615.UserInputType==Enum.UserInputType.MouseButton1) or (v615.UserInputType==Enum.UserInputType.Touch)) then v412=true;v414(v615);end end);v397.InputEnded:Connect(function(v616) if ((v616.UserInputType==Enum.UserInputType.MouseButton1) or (v616.UserInputType==Enum.UserInputType.Touch)) then v412=false;end end);v3.InputChanged:Connect(function(v617) if (v412 and ((v617.UserInputType==Enum.UserInputType.MouseMovement) or (v617.UserInputType==Enum.UserInputType.Touch))) then v414(v617);end end);return v371;end local function v135(v415,v416,v417) local v418=Instance.new("Frame",v415);v418.Size=UDim2.new(1, -20,0,(v12.IsMobile and 40) or 45 );v418.BackgroundColor3=v19("Secondary");v418.BackgroundTransparency=0.6;Instance.new("UICorner",v418).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 12 );local v423=Instance.new("TextButton",v418);v423.Size=UDim2.new(1,0,1,0);v423.BackgroundTransparency=1;v423.Text=v416;v423.TextColor3=v19("Text");v423.TextSize=(v12.IsMobile and 12) or 13 ;v423.Font=Enum.Font.GothamBold;v423.MouseButton1Click:Connect(function() if v417 then pcall(v417);end end);return v418;end local function v136(v431,v432,v433,v434,v435) local v436=Instance.new("Frame",v431);v436.Size=UDim2.new(1, -20,0,v130);v436.BackgroundColor3=v19("Secondary");v436.BackgroundTransparency=0.6;v436.ClipsDescendants=false;Instance.new("UICorner",v436).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 12 );local v442=Instance.new("TextLabel",v436);v442.Size=UDim2.new(0.5,0,0,20);v442.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,8);v442.BackgroundTransparency=1;v442.Text=v432;v442.TextColor3=v19("Text");v442.TextSize=(v12.IsMobile and 11) or 13 ;v442.Font=Enum.Font.GothamBold;v442.TextXAlignment=Enum.TextXAlignment.Left;local v453=(v12.IsMobile and 120) or 160 ;local v454=Instance.new("TextButton",v436);v454.Size=UDim2.new(0,v453,0,(v12.IsMobile and 25) or 30 );v454.Position=UDim2.new(1, -v453-10 ,0.5,(v12.IsMobile and  -12) or  -15 );v454.BackgroundColor3=v19("Background");v454.Text="  "   .. (v434 or v433[1]) ;v454.TextColor3=v19("Text");v454.TextSize=(v12.IsMobile and 10) or 11 ;v454.Font=Enum.Font.Gotham;v454.TextXAlignment=Enum.TextXAlignment.Left;Instance.new("UICorner",v454).CornerRadius=UDim.new(0,10);local v465=Instance.new("Frame",v436);v465.Size=UDim2.new(0,v453,0,0);v465.Position=UDim2.new(1, -v453-10 ,1, -8);v465.BackgroundColor3=v19("Background");v465.BackgroundTransparency=0.1;v465.Visible=false;v465.ClipsDescendants=true;v465.ZIndex=10;Instance.new("UICorner",v465).CornerRadius=UDim.new(0,10);local v474=Instance.new("UIListLayout",v465);v474.Padding=UDim.new(0,3);local v476=Instance.new("UIPadding",v465);v476.PaddingTop=UDim.new(0,5);v476.PaddingBottom=UDim.new(0,5);local v479,v480=v434 or v433[1] ,false;for v618,v619 in ipairs(v433) do local v620=Instance.new("TextButton",v465);v620.Size=UDim2.new(1,0,0,(v12.IsMobile and 25) or 28 );v620.BackgroundColor3=v19("Secondary");v620.BackgroundTransparency=0.3;v620.Text="  "   .. v619 ;v620.TextColor3=v19("Text");v620.TextSize=(v12.IsMobile and 10) or 11 ;v620.Font=Enum.Font.Gotham;v620.TextXAlignment=Enum.TextXAlignment.Left;v620.ZIndex=11;Instance.new("UICorner",v620).CornerRadius=UDim.new(0,8);v620.MouseButton1Click:Connect(function() v479=v619;v454.Text="  "   .. v619 ;v480=false;v21(v465,{Size=UDim2.new(0,v453,0,0)},0.3,Enum.EasingStyle.Back);task.delay(0.3,function() v465.Visible=false;end);if v435 then pcall(v435,v619);end end);end v454.MouseButton1Click:Connect(function() v480= not v480;if v480 then v465.Visible=true;v21(v465,{Size=UDim2.new(0,v453,0,( #v433 * ((v12.IsMobile and 28) or 31)) + 10 )},0.3,Enum.EasingStyle.Back);else v21(v465,{Size=UDim2.new(0,v453,0,0)},0.3,Enum.EasingStyle.Back);task.delay(0.3,function() v465.Visible=false;end);end end);return v436;end local function v137(v481,v482,v483,v484,v485) local v486=Instance.new("Frame",v481);v486.Size=UDim2.new(1, -20,0,v130);v486.BackgroundColor3=v19("Secondary");v486.BackgroundTransparency=0.6;Instance.new("UICorner",v486).CornerRadius=UDim.new(0,(v12.IsMobile and 10) or 12 );local v491=Instance.new("TextLabel",v486);v491.Size=UDim2.new(0.5,0,0,20);v491.Position=UDim2.new(0,(v12.IsMobile and 10) or 15 ,0,8);v491.BackgroundTransparency=1;v491.Text=v482;v491.TextColor3=v19("Text");v491.TextSize=(v12.IsMobile and 11) or 13 ;v491.Font=Enum.Font.GothamBold;v491.TextXAlignment=Enum.TextXAlignment.Left;local v502=(v12.IsMobile and 120) or 160 ;local v503=Instance.new("TextBox",v486);v503.Size=UDim2.new(0,v502,0,(v12.IsMobile and 25) or 30 );v503.Position=UDim2.new(1, -v502-10 ,0.5,(v12.IsMobile and  -12) or  -15 );v503.BackgroundColor3=v19("Background");v503.PlaceholderText=v483;v503.PlaceholderColor3=v19("TextSecondary");v503.Text=v484 or "" ;v503.TextColor3=v19("Text");v503.TextSize=(v12.IsMobile and 10) or 11 ;v503.Font=Enum.Font.Gotham;v503.TextXAlignment=Enum.TextXAlignment.Left;v503.ClearTextOnFocus=false;Instance.new("UICorner",v503).CornerRadius=UDim.new(0,10);local v517=Instance.new("UIPadding",v503);v517.PaddingLeft=UDim.new(0,10);v503.FocusLost:Connect(function() if v485 then pcall(v485,v503.Text);end end);return v486;end local function v138() local v519=Instance.new("ScrollingFrame",v126);v519.Size=UDim2.new(1, -20,1, -20);v519.Position=UDim2.new(0,10,0,10);v519.BackgroundTransparency=1;v519.ScrollBarThickness=(v12.IsMobile and 3) or 4 ;v519.ScrollBarImageColor3=v19("Accent");v519.CanvasSize=UDim2.new(0,0,0,(v12.IsMobile and 1800) or 2200 );Instance.new("UIListLayout",v519).Padding=UDim.new(0,v131);v132(v519,"AIMBOT");v133(v519,"Aimbot","Lock onto enemies",false,function(v633) v20.Aimbot.Enabled=v633;v42("Aimbot",(v633 and "Enabled") or "Disabled" ,2,(v633 and "success") or "warning" );end);v134(v519,"FOV",10,360,180,function(v635) v20.Aimbot.FOV=v635;end);v134(v519,"Smoothness",1,100,20,function(v637) v20.Aimbot.Smooth=v637/100 ;end);v136(v519,"Target Part",{"Head","HumanoidRootPart","Torso"},"Head",function(v639) v20.Aimbot.Part=v639;end);v133(v519,"Team Check","Ignore team",false,function(v641) v20.Aimbot.TeamCheck=v641;end);v133(v519,"Wall Check","Only visible",true,function(v643) v20.Aimbot.WallCheck=v643;end);v134(v519,"Prediction",0,100,16,function(v645) v20.Aimbot.Prediction=v645/100 ;end);v134(v519,"Target Radius (Blocks)",10,15000,500,function(v647) v20.Aimbot.Radius=v647;end);v133(v519,"Custom Radius Mode","Enter custom distance",false,function(v649) v20.Aimbot.CustomRadius=v649;end);v137(v519,"Custom Radius Value","10-15000 blocks","500",function(v651) v20.Aimbot.CustomRadiusValue=tonumber(v651) or 500 ;end);v133(v519,"Show FOV Circle","Display FOV",true,function(v653) v20.Aimbot.ShowFOV=v653;end);v132(v519,"TRIGGERBOT");v133(v519,"Triggerbot","Auto fire on target",false,function(v655) v20.Triggerbot.Enabled=v655;end);v134(v519,"Trigger Delay",0,500,0,function(v657) v20.Triggerbot.Delay=v657/1000 ;end);v134(v519,"Max Distance",10,1000,500,function(v659) v20.Triggerbot.MaxDist=v659;end);v132(v519,"SILENT AIM");v133(v519,"Silent Aim","Server-side aim",false,function(v661) v20.SilentAim.Enabled=v661;end);v134(v519,"Hit Chance",1,100,100,function(v663) v20.SilentAim.HitChance=v663;end);v132(v519,"KILL AURA");v133(v519,"Kill Aura","Attack nearby",false,function(v665) v20.KillAura.Enabled=v665;end);v134(v519,"Aura Range",1,50,15,function(v667) v20.KillAura.Range=v667;end);v133(v519,"Aura Team Check","Ignore team",false,function(v669) v20.KillAura.TeamCheck=v669;end);v132(v519,"ADDITIONAL COMBAT");v133(v519,"Hitbox Extender","Bigger hitboxes",false,function(v671) v20.HitboxExtender.Enabled=v671;end);v134(v519,"Hitbox Size",1,20,5,function(v673) v20.HitboxExtender.Size=v673;end);v133(v519,"Anti-Aim","Desync model",false,function(v675) v20.AntiAim.Enabled=v675;end);v136(v519,"Anti-Aim Type",{"Roll","Spin","Jitter","Down"},"Roll",function(v677) v20.AntiAim.Type=v677;end);v133(v519,"Auto Parry","Auto parry",false,function(v679) v20.AutoParry.Enabled=v679;end);v133(v519,"Reach","Extended reach",false,function(v681) v20.Reach.Enabled=v681;end);v134(v519,"Reach Distance",5,30,15,function(v683) v20.Reach.Distance=v683;end);v133(v519,"Critical Hits","Force crits",false,function(v685) v20.CriticalHits.Enabled=v685;end);v133(v519,"Anti-Knockback","No knockback",false,function(v687) v20.AntiKnockback.Enabled=v687;end);v133(v519,"Auto Shoot","Auto fire",false,function(v689) v20.AutoShoot.Enabled=v689;end);v133(v519,"Auto Block","Auto block",false,function(v691) v20.AutoBlock.Enabled=v691;end);v133(v519,"No Recoil","Remove recoil",false,function(v693) v20.NoRecoil.Enabled=v693;end);v133(v519,"No Spread","Remove spread",false,function(v695) v20.NoSpread.Enabled=v695;end);v133(v519,"Rapid Fire","Faster shooting",false,function(v697) v20.RapidFire.Enabled=v697;end);v124['Combat']=v519;end local function v139() local v528=Instance.new("ScrollingFrame",v126);v528.Size=UDim2.new(1, -20,1, -20);v528.Position=UDim2.new(0,10,0,10);v528.BackgroundTransparency=1;v528.ScrollBarThickness=(v12.IsMobile and 3) or 4 ;v528.ScrollBarImageColor3=v19("Accent");v528.CanvasSize=UDim2.new(0,0,0,(v12.IsMobile and 2000) or 2500 );Instance.new("UIListLayout",v528).Padding=UDim.new(0,v131);v132(v528,"SPEED");v133(v528,"Speed Hack","Increase walkspeed",false,function(v699) v20.Speed.Enabled=v699;end);v134(v528,"Walk Speed",16,500,16,function(v701) v20.Speed.Value=v701;end);v132(v528,"FLY");v133(v528,"Fly","Flight mode",false,function(v703) v20.Fly.Enabled=v703;end);v134(v528,"Fly Speed",10,500,50,function(v705) v20.Fly.Speed=v705;end);v133(v528,"Fly Noclip","Through walls",false,function(v707) v20.Fly.Noclip=v707;end);v132(v528,"Noclip & Jump");v133(v528,"Noclip","Walk through walls",false,function(v709) v20.Noclip.Enabled=v709;end);v133(v528,"Infinite Jump","Jump in air",false,function(v711) v20.InfJump.Enabled=v711;end);v133(v528,"Long Jump","Extended jump",false,function(v713) v20.LongJump.Enabled=v713;end);v134(v528,"Jump Power",10,300,100,function(v715) v20.LongJump.Power=v715;end);v133(v528,"Bunny Hop","Auto jump",false,function(v717) v20.BunnyHop.Enabled=v717;end);v133(v528,"High Jump","Higher jumps",false,function(v719) v20.HighJump.Enabled=v719;end);v134(v528,"Jump Height",50,300,100,function(v721) v20.HighJump.Height=v721;end);v133(v528,"Super Jump","Massive jump",false,function(v723) v20.SuperJump.Enabled=v723;end);v134(v528,"Super Power",100,1000,200,function(v725) v20.SuperJump.Power=v725;end);v132(v528,"SPECIAL MOVEMENT");v133(v528,"Jetpack","Fly upward",false,function(v727) v20.Jetpack.Enabled=v727;end);v134(v528,"Jetpack Power",10,500,100,function(v729) v20.Jetpack.Power=v729;end);v133(v528,"Wall Climb","Climb walls",false,function(v731) v20.WallClimb.Enabled=v731;end);v133(v528,"Glide","Glide in air",false,function(v733) v20.Glide.Enabled=v733;end);v133(v528,"Spider","Walk on walls",false,function(v735) v20.Spider.Enabled=v735;end);v133(v528,"CFrame Speed","TP-based speed",false,function(v737) v20.CFrameSpeed.Enabled=v737;end);v134(v528,"CFrame Value",10,1000,100,function(v739) v20.CFrameSpeed.Value=v739;end);v133(v528,"Blink (Q)","Short teleport",false,function(v741) v20.Blink.Enabled=v741;end);v134(v528,"Blink Distance",5,100,20,function(v743) v20.Blink.Distance=v743;end);v133(v528,"Slide","Slide move",false,function(v745) v20.Slide.Enabled=v745;end);v134(v528,"Slide Speed",10,200,50,function(v747) v20.Slide.Speed=v747;end);v133(v528,"Dash","Quick dash",false,function(v749) v20.Dash.Enabled=v749;end);v134(v528,"Dash Distance",5,100,30,function(v751) v20.Dash.Distance=v751;end);v132(v528,"TELEPORTS");v135(v528,"TP to Mouse",function() local v753=v25();if v753 then v753.CFrame=CFrame.new(v11.Hit.Position + Vector3.new(0,3,0) );v42("TP","Teleported!",2,"success");end end);v135(v528,"TP to Sky",function() local v754=v25();if v754 then v754.CFrame=CFrame.new(v754.Position + Vector3.new(0,1000,0) );v42("TP","Sky TP!",2,"success");end end);v135(v528,"TP to Spawn",function() local v755=v5:FindFirstChild("SpawnLocation",true);if v755 then local v950=v25();if v950 then v950.CFrame=v755.CFrame + Vector3.new(0,5,0) ;v42("TP","To spawn!",2,"success");end end end);v135(v528,"TP to Random Player",function() local v756=v1:GetPlayers();local v757=v756[math.random(1, #v756)];if (v757 and (v757~=v9) and v757.Character) then local v951=v757.Character:FindFirstChild("HumanoidRootPart");local v952=v25();if (v951 and v952) then v952.CFrame=v951.CFrame + Vector3.new(5,0,0) ;v42("TP","To "   .. v757.Name ,2,"success");end end end);v124['Movement']=v528;end local function v140() local v537=Instance.new("ScrollingFrame",v126);v537.Size=UDim2.new(1, -20,1, -20);v537.Position=UDim2.new(0,10,0,10);v537.BackgroundTransparency=1;v537.ScrollBarThickness=(v12.IsMobile and 3) or 4 ;v537.ScrollBarImageColor3=v19("Accent");v537.CanvasSize=UDim2.new(0,0,0,(v12.IsMobile and 1500) or 2000 );Instance.new("UIListLayout",v537).Padding=UDim.new(0,v131);v132(v537,"SURVIVAL");v133(v537,"God Mode","Infinite HP",false,function(v758) v20.GodMode.Enabled=v758;end);v133(v537,"Anti-Void","Prevent void death",false,function(v760) v20.AntiVoid.Enabled=v760;end);v134(v537,"Void Height", -1000, -100, -500,function(v762) v20.AntiVoid.Height=v762;end);v133(v537,"No Fall Damage","No fall damage",false,function(v764) v20.NoFall.Enabled=v764;end);v133(v537,"Anti-Grab","Prevent grab",false,function(v766) v20.AntiGrab.Enabled=v766;end);v133(v537,"Auto Revive","Auto respawn",false,function(v768) v20.AutoRevive.Enabled=v768;end);v133(v537,"Regeneration","Auto regen",false,function(v770) v20.Regeneration.Enabled=v770;end);v134(v537,"Regen Rate",1,50,5,function(v772) v20.Regeneration.Rate=v772;end);v133(v537,"Infinite Stamina","No stamina drain",false,function(v774) v20.InfiniteStamina.Enabled=v774;end);v132(v537,"AUTOMATION");v133(v537,"Anti-AFK","Prevent AFK kick",false,function(v776) v20.AntiAFK.Enabled=v776;end);v133(v537,"Auto Click","Auto click",false,function(v778) v20.AutoClick.Enabled=v778;end);v134(v537,"Clicks/Second",1,30,10,function(v780) v20.AutoClick.CPS=v780;end);v133(v537,"Auto Farm","Auto farm",false,function(v782) v20.AutoFarm.Enabled=v782;end);v132(v537,"CHARACTER ACTIONS");v135(v537,"Reset Character",function() local v784=v24();if v784 then v784.Health=0;v42("Character","Reset!",2,"warning");end end);v135(v537,"Heal to Full",function() local v785=v24();if v785 then v785.Health=v785.MaxHealth;v42("Character","Healed!",2,"success");end end);v135(v537,"Set Max HP Infinite",function() local v786=v24();if v786 then v786.MaxHealth=math.huge;v786.Health=math.huge;v42("Character","Infinite HP!",2,"success");end end);v132(v537,"INFO");v135(v537,"Copy Player ID",function() if setclipboard then pcall(setclipboard,tostring(v9.UserId));end v42("Info","Copied: "   .. v9.UserId ,2,"success");end);v135(v537,"Copy Username",function() if setclipboard then pcall(setclipboard,v9.Name);end v42("Info","Copied: "   .. v9.Name ,2,"success");end);v124['Player']=v537;end local function v141() local v546=Instance.new("ScrollingFrame",v126);v546.Size=UDim2.new(1, -20,1, -20);v546.Position=UDim2.new(0,10,0,10);v546.BackgroundTransparency=1;v546.ScrollBarThickness=(v12.IsMobile and 3) or 4 ;v546.ScrollBarImageColor3=v19("Accent");v546.CanvasSize=UDim2.new(0,0,0,(v12.IsMobile and 2000) or 2800 );Instance.new("UIListLayout",v546).Padding=UDim.new(0,v131);v132(v546,"ENHANCED ESP");v133(v546,"ESP","Show player info",false,function(v787) v20.ESP.Enabled=v787;end);v133(v546,"Box ESP","Boxes around players",true,function(v789) v20.ESP.Box=v789;end);v133(v546,"Name ESP","Show names",true,function(v791) v20.ESP.Name=v791;end);v133(v546,"Health ESP","Health bars",true,function(v793) v20.ESP.Health=v793;end);v133(v546,"Distance ESP","Show distance",true,function(v795) v20.ESP.Distance=v795;end);v133(v546,"Team Check","Ignore team",false,function(v797) v20.ESP.TeamCheck=v797;end);v134(v546,"Max Distance",100,5000,2000,function(v799) v20.ESP.MaxDist=v799;end);v133(v546,"Glow ESP","Crystal glow",false,function(v801) v20.ESP.Glow=v801;end);v133(v546,"Outline ESP","Outline boxes",true,function(v803) v20.ESP.Outline=v803;end);v133(v546,"Animated ESP","Animated effects",true,function(v805) v20.ESP.Animated=v805;end);v132(v546,"TRACERS & CHAMS");v133(v546,"Tracers","Lines to players",false,function(v807) v20.Tracers.Enabled=v807;end);v136(v546,"Tracer Origin",{"Bottom","Center","Top","Mouse"},"Bottom",function(v809) v20.Tracers.Origin=v809;end);v133(v546,"Chams","Highlight through walls",false,function(v811) v20.Chams.Enabled=v811;end);v134(v546,"Chams Transparency",0,100,50,function(v813) v20.Chams.Transparency=v813/100 ;end);v133(v546,"Skeleton ESP","Show bones",false,function(v815) v20.SkeletonESP.Enabled=v815;end);v132(v546,"VISUALS");v133(v546,"Fullbright","Remove darkness",false,function(v817) v20.Fullbright.Enabled=v817;end);v133(v546,"No Fog","Remove fog",false,function(v819) v20.NoFog.Enabled=v819;end);v133(v546,"X-Ray","See through walls",false,function(v821) v20.Xray.Enabled=v821;end);v134(v546,"X-Ray Transparency",0,100,70,function(v823) v20.Xray.Transparency=v823/100 ;end);v133(v546,"Night Vision","Night vision",false,function(v825) v20.NightVision.Enabled=v825;end);v132(v546,"CAMERA");v133(v546,"Freecam","Free camera",false,function(v827) v20.Freecam.Enabled=v827;end);v134(v546,"Freecam Speed",10,200,50,function(v829) v20.Freecam.Speed=v829;end);v133(v546,"FOV Changer","Change FOV",false,function(v831) v20.FOVChanger.Enabled=v831;end);v134(v546,"Camera FOV",30,120,70,function(v833) v20.FOVChanger.Value=v833;end);v124['Render']=v546;end local function v142() local v555=Instance.new("ScrollingFrame",v126);v555.Size=UDim2.new(1, -20,1, -20);v555.Position=UDim2.new(0,10,0,10);v555.BackgroundTransparency=1;v555.ScrollBarThickness=(v12.IsMobile and 3) or 4 ;v555.ScrollBarImageColor3=v19("Accent");v555.CanvasSize=UDim2.new(0,0,0,(v12.IsMobile and 1800) or 2800 );Instance.new("UIListLayout",v555).Padding=UDim.new(0,v131);v132(v555,"SERVER");v135(v555,"Rejoin Server",function() pcall(function() v8:Teleport(game.PlaceId,v9);end);v42("Server","Rejoining...",2,"info");end);v135(v555,"Server Hop",function() pcall(function() v8:Teleport(game.PlaceId,v9);end);v42("Server","Hopping...",2,"info");end);v135(v555,"Copy JobId",function() if setclipboard then pcall(setclipboard,game.JobId);end v42("Server","JobId copied!",2,"success");end);v132(v555,"CHAT");v133(v555,"Chat Spammer","Auto send messages",false,function(v835) v20.ChatSpam.Enabled=v835;end);v137(v555,"Spam Message","Your message","Crystal Hub",function(v837) v20.ChatSpam.Message=v837;end);v134(v555,"Spam Delay",1,10,3,function(v839) v20.ChatSpam.Delay=v839;end);v132(v555,"WORLD");v133(v555,"Time Change","Change time",false,function(v841) v20.TimeChange.Enabled=v841;end);v134(v555,"Time of Day",0,24,14,function(v843) v20.TimeChange.Time=v843;end);v133(v555,"Gravity","Change gravity",false,function(v845) v20.Gravity.Enabled=v845;end);v134(v555,"Gravity Value",0,500,196,function(v847) v20.Gravity.Value=v847/10 ;end);v133(v555,"No Cooldown","Remove cooldowns",false,function(v849) v20.NoCooldown.Enabled=v849;end);v133(v555,"Auto Collect","Auto pickup items",false,function(v851) v20.AutoCollect.Enabled=v851;end);v134(v555,"Collect Range",10,200,50,function(v853) v20.AutoCollect.Range=v853;end);v132(v555,"UTILITY");v135(v555,"Copy Position",function() local v855=v25();if v855 then local v959=string.format("%.2f, %.2f, %.2f",v855.Position.X,v855.Position.Y,v855.Position.Z);if setclipboard then pcall(setclipboard,v959);end v42("Position","Copied: "   .. v959 ,3,"success");end end);v135(v555,"Show Player Count",function() v42("Players","Count: "   ..  #v1:GetPlayers() ,3,"info");end);v132(v555,"PERFORMANCE");v135(v555,"Remove Terrain",function() pcall(function() if v5.Terrain then v5.Terrain:Clear();end end);v42("Perf","Terrain removed!",2,"warning");end);v135(v555,"Remove Particles",function() pcall(function() for v960,v961 in pairs(v5:GetDescendants()) do if v961:IsA("ParticleEmitter") then v961.Enabled=false;end end end);v42("Perf","Particles disabled!",2,"warning");end);v135(v555,"FPS Unlock",function() if setfpscap then pcall(setfpscap,9999);end v42("Perf","FPS unlocked!",2,"success");end);v132(v555,"VISUAL");v133(v555,"Rainbow Mode","Rainbow UI colors",false,function(v856) v20.RainbowMode.Enabled=v856;end);v124['Utils']=v555;end v138();v139();v140();v141();v142();if v123['Combat'] then v21(v123['Combat'],{BackgroundTransparency=0.3,BackgroundColor3=v19("Accent")},0.01);end for v564,v565 in pairs(v124) do if (v564~="Combat") then v565.Visible=false;end end local v143=Instance.new("Frame",v45);v143.Size=UDim2.new(1,0,0,(v12.IsMobile and 20) or 25 );v143.Position=UDim2.new(0,0,1,(v12.IsMobile and  -20) or  -25 );v143.BackgroundColor3=v19("Primary");v143.BackgroundTransparency=0.5;local v148=Instance.new("TextLabel",v143);v148.Size=UDim2.new(0.7,0,1,0);v148.Position=UDim2.new(0,10,0,0);v148.BackgroundTransparency=1;v148.Text="💎 Crystal Hub v6.0 | "   .. v16.Platform ;v148.TextColor3=v19("TextSecondary");v148.TextSize=(v12.IsMobile and 9) or 10 ;v148.Font=Enum.Font.Gotham;v148.TextXAlignment=Enum.TextXAlignment.Left;local v158=Instance.new("TextLabel",v143);v158.Size=UDim2.new(0.3, -10,1,0);v158.Position=UDim2.new(0.7,0,0,0);v158.BackgroundTransparency=1;v158.Text="FPS: 60";v158.TextColor3=v19("Success");v158.TextSize=(v12.IsMobile and 9) or 10 ;v158.Font=Enum.Font.GothamBold;v158.TextXAlignment=Enum.TextXAlignment.Right;v3.InputBegan:Connect(function(v566,v567) if v567 then return;end if (v566.KeyCode==Enum.KeyCode.RightShift) then if v45 then v45.Visible= not v45.Visible;end end if ((v566.KeyCode==Enum.KeyCode.Q) and v20.Blink.Enabled) then local v919=v25();if v919 then v919.CFrame=v919.CFrame + (v10.CFrame.LookVector * v20.Blink.Distance) ;v42("Blink","TP!",1,"success");end end if ((v566.KeyCode==Enum.KeyCode.E) and v20.Dash.Enabled) then local v920=v25();if v920 then v920.Velocity=v920.Velocity + (v10.CFrame.LookVector * v20.Dash.Distance * 3) ;v42("Dash","Dash!",1,"success");end end end);task.spawn(function() while true do pcall(function() if v20.Aimbot.Enabled then local v981=v28(v20.Aimbot.FOV,v20.Aimbot.Part,v20.Aimbot.TeamCheck,v20.Aimbot.WallCheck);if (v981 and v981.Character) then local v1034=v981.Character:FindFirstChild(v20.Aimbot.Part);if v1034 then local v1071=v1034.Position;local v1072=v981.Character:FindFirstChild("HumanoidRootPart");if v1072 then v1071=v1071 + (v1072.Velocity * v20.Aimbot.Prediction) ;end v10.CFrame=v10.CFrame:Lerp(CFrame.new(v10.CFrame.Position,v1071),v20.Aimbot.Smooth);end end end end);task.wait();end end);task.spawn(function() while true do pcall(function() if (v20.Triggerbot.Enabled and v11.Target) then local v982=v1:GetPlayerFromCharacter(v11.Target.Parent);if (v982 and (v982~=v9)) then if ( not v20.Triggerbot.TeamCheck or (v982.Team~=v9.Team)) then if (v26(v9,v982)<=v20.Triggerbot.MaxDist) then task.wait(v20.Triggerbot.Delay);if mouse1click then pcall(mouse1click);end end end end end end);task.wait(0.01);end end);task.spawn(function() while true do pcall(function() if v20.KillAura.Enabled then for v1015,v1016 in ipairs(v1:GetPlayers()) do if ((v1016~=v9) and v1016.Character and v23(v1016)) then if (v20.KillAura.TeamCheck and (v1016.Team==v9.Team)) then continue;end if (v26(v9,v1016)<=v20.KillAura.Range) then local v1079=v9.Character and v9.Character:FindFirstChildOfClass("Tool") ;if v1079 then pcall(function() v1079:Activate();end);end end end end end end);task.wait(v20.KillAura.Delay);end end);task.spawn(function() while true do pcall(function() if v20.HitboxExtender.Enabled then for v1017,v1018 in ipairs(v1:GetPlayers()) do if ((v1018~=v9) and v1018.Character and v23(v1018)) then local v1051=v1018.Character:FindFirstChild("HumanoidRootPart");if (v1051 and  not v16.HitboxParts[v1018.UserId]) then local v1080=Instance.new("Part");v1080.Size=Vector3.new(5,5,5);v1080.Transparency=0.7;v1080.CanCollide=false;v1080.Color=Color3.fromRGB(255,0,0);v1080.Material=Enum.Material.ForceField;v1080.Parent=v1018.Character;local v1089=Instance.new("WeldConstraint",v1080);v1089.Part0=v1080;v1089.Part1=v1051;v16.HitboxParts[v1018.UserId]=v1080;end if v16.HitboxParts[v1018.UserId] then local v1093=v20.HitboxExtender.Size;v16.HitboxParts[v1018.UserId].Size=Vector3.new(v1093,v1093,v1093);v16.HitboxParts[v1018.UserId].Transparency=v20.HitboxExtender.Transparency;end end end else for v1019,v1020 in pairs(v16.HitboxParts) do if v1020 then pcall(function() v1020:Destroy();end);end end v16.HitboxParts={};end end);task.wait(0.5);end end);task.spawn(function() while true do pcall(function() if v20.Speed.Enabled then local v984=v24();if v984 then v984.WalkSpeed=v20.Speed.Value;end else local v985=v24();if (v985 and (v985.WalkSpeed~=16)) then v985.WalkSpeed=16;end end end);task.wait();end end);local v168,v169;task.spawn(function() while true do pcall(function() if v20.Fly.Enabled then local v986=v25();if v986 then if  not v168 then v168=Instance.new("BodyVelocity",v986);v168.MaxForce=Vector3.new(math.huge,math.huge,math.huge);end if  not v169 then v169=Instance.new("BodyGyro",v986);v169.MaxTorque=Vector3.new(math.huge,math.huge,math.huge);v169.P=10000;end local v1038=v10.CFrame.LookVector;local v1039=0;if v12.IsPC then if v3:IsKeyDown(Enum.KeyCode.Space) then v1039=1;elseif v3:IsKeyDown(Enum.KeyCode.LeftControl) then v1039= -1;end end v168.Velocity=(v1038 * v20.Fly.Speed) + Vector3.new(0,v1039 * v20.Fly.Speed ,0) ;v169.CFrame=v10.CFrame;end else if v168 then pcall(function() v168:Destroy();end);v168=nil;end if v169 then pcall(function() v169:Destroy();end);v169=nil;end end end);task.wait();end end);local v170;task.spawn(function() while true do pcall(function() if (v20.Noclip.Enabled and  not v170) then v170=v2.Stepped:Connect(function() if v9.Character then for v1077,v1078 in pairs(v9.Character:GetDescendants()) do if v1078:IsA("BasePart") then v1078.CanCollide=false;end end end end);elseif ( not v20.Noclip.Enabled and v170) then v170:Disconnect();v170=nil;if v9.Character then for v1097,v1098 in pairs(v9.Character:GetDescendants()) do if (v1098:IsA("BasePart") and (v1098.Name~="HumanoidRootPart")) then v1098.CanCollide=true;end end end end end);task.wait(0.1);end end);local v171;task.spawn(function() while true do pcall(function() if (v20.InfJump.Enabled and  not v171) then v171=v3.JumpRequest:Connect(function() local v1021=v24();if v1021 then pcall(function() v1021:ChangeState(Enum.HumanoidStateType.Jumping);end);end end);elseif ( not v20.InfJump.Enabled and v171) then v171:Disconnect();v171=nil;end end);task.wait(0.1);end end);task.spawn(function() while true do pcall(function() if v20.GodMode.Enabled then local v987=v24();if v987 then v987.MaxHealth=math.huge;v987.Health=math.huge;end end end);task.wait();end end);task.spawn(function() while true do pcall(function() if v20.AntiVoid.Enabled then local v988=v25();if (v988 and (v988.Position.Y<v20.AntiVoid.Height)) then v988.CFrame=CFrame.new(v988.Position.X,v988.Position.Y + 1000 ,v988.Position.Z);v42("Anti-Void","Saved!",2,"warning");end end end);task.wait(0.5);end end);task.spawn(function() while true do pcall(function() if v20.NoFall.Enabled then local v989=v25();if v989 then v989.Velocity=Vector3.new(v989.Velocity.X,math.max(v989.Velocity.Y, -50),v989.Velocity.Z);end end end);task.wait();end end);task.spawn(function() while true do pcall(function() if v20.Regeneration.Enabled then local v990=v24();if (v990 and (v990.Health<v990.MaxHealth)) then v990.Health=math.min(v990.Health + v20.Regeneration.Rate ,v990.MaxHealth);end end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() for v962,v963 in pairs(v16.ESPObjects) do if v963 then pcall(function() v963:Remove();end);end end v16.ESPObjects={};if (v20.ESP.Enabled and v29) then local v991=tick();for v1022,v1023 in ipairs(v1:GetPlayers()) do if ((v1023~=v9) and v1023.Character and v23(v1023)) then if (v20.ESP.TeamCheck and (v1023.Team==v9.Team)) then continue;end local v1052=v1023.Character:FindFirstChild("HumanoidRootPart");local v1053=v1023.Character:FindFirstChildOfClass("Humanoid");local v1054=v1023.Character:FindFirstChild("Head");if (v1052 and v1053 and v1054) then local v1099=v26(v9,v1023);if (v1099<=v20.ESP.MaxDist) then local v1108,v1109=v22(v1054.Position);if v1109 then local v1117,v1118=v22(v1054.Position + Vector3.new(0,2,0) );local v1119,v1118=v22(v1052.Position-Vector3.new(0,3,0) );local v1120=math.abs(v1117.Y-v1119.Y );local v1121=v1120 * 0.5 ;local v1122=((v1023.Team==v9.Team) and Color3.fromRGB(80,220,140)) or Color3.fromRGB(100,180,255) ;if v20.ESP.Box then local v1123=Drawing.new("Square");v1123.Size=Vector2.new(v1121,v1120);v1123.Position=Vector2.new(v1108.X-(v1121/2) ,v1117.Y);v1123.Thickness=2;v1123.Color=v1122;v1123.Filled=false;v1123.Visible=true;table.insert(v16.ESPObjects,v1123);if v20.ESP.Outline then local v1159=Drawing.new("Square");v1159.Size=Vector2.new(v1121 + 4 ,v1120 + 4 );v1159.Position=Vector2.new((v1108.X-(v1121/2)) -2 ,v1117.Y-2 );v1159.Thickness=1;v1159.Color=Color3.fromRGB(0,0,0);v1159.Visible=true;table.insert(v16.ESPObjects,v1159);end end if v20.ESP.Name then local v1130=Drawing.new("Text");v1130.Text="◆ "   .. v1023.DisplayName ;v1130.Center=true;v1130.Outline=true;v1130.Size=14;v1130.Color=v1122;v1130.Position=Vector2.new(v1108.X,v1117.Y-25 );v1130.Visible=true;table.insert(v16.ESPObjects,v1130);end if v20.ESP.Health then local v1138=v1053.Health/v1053.MaxHealth ;local v1139=Drawing.new("Square");v1139.Size=Vector2.new(4,v1120);v1139.Position=Vector2.new((v1108.X-(v1121/2)) -10 ,v1117.Y);v1139.Color=Color3.fromRGB(30,30,30);v1139.Filled=true;v1139.Visible=true;table.insert(v16.ESPObjects,v1139);local v1145=Drawing.new("Square");v1145.Size=Vector2.new(4,v1120 * v1138 );v1145.Position=Vector2.new((v1108.X-(v1121/2)) -10 ,(v1117.Y + v1120) -(v1120 * v1138) );v1145.Color=Color3.fromRGB(255 -(255 * v1138) ,255 * v1138 ,50);v1145.Filled=true;v1145.Visible=true;table.insert(v16.ESPObjects,v1145);end if v20.ESP.Distance then local v1151=Drawing.new("Text");v1151.Text="["   .. math.floor(v1099)   .. "m]" ;v1151.Center=true;v1151.Outline=true;v1151.Size=12;v1151.Color=Color3.fromRGB(220,220,220);v1151.Position=Vector2.new(v1108.X,v1119.Y + 5 );v1151.Visible=true;table.insert(v16.ESPObjects,v1151);end end end end end end end end);task.wait();end end);task.spawn(function() while true do pcall(function() for v964,v965 in pairs(v16.TracerObjects) do if v965 then pcall(function() v965:Remove();end);end end v16.TracerObjects={};if (v20.Tracers.Enabled and v29) then for v1024,v1025 in ipairs(v1:GetPlayers()) do if ((v1025~=v9) and v1025.Character and v23(v1025)) then if (v20.Tracers.TeamCheck and (v1025.Team==v9.Team)) then continue;end local v1055=v1025.Character:FindFirstChild("HumanoidRootPart");if v1055 then local v1100,v1101=v22(v1055.Position);if v1101 then local v1110=Vector2.zero;if (v20.Tracers.Origin=="Bottom") then v1110=Vector2.new(v10.ViewportSize.X/2 ,v10.ViewportSize.Y);elseif (v20.Tracers.Origin=="Center") then v1110=Vector2.new(v10.ViewportSize.X/2 ,v10.ViewportSize.Y/2 );elseif (v20.Tracers.Origin=="Top") then v1110=Vector2.new(v10.ViewportSize.X/2 ,0);elseif (v20.Tracers.Origin=="Mouse") then v1110=v3:GetMouseLocation();end local v1111=Drawing.new("Line");v1111.From=v1110;v1111.To=v1100;v1111.Color=Color3.fromRGB(100,180,255);v1111.Thickness=1.5;v1111.Visible=true;table.insert(v16.TracerObjects,v1111);end end end end end end);task.wait();end end);task.spawn(function() while true do pcall(function() for v966,v967 in pairs(v16.ChamsObjects) do if v967 then pcall(function() v967:Destroy();end);end end v16.ChamsObjects={};if v20.Chams.Enabled then for v1026,v1027 in ipairs(v1:GetPlayers()) do if ((v1027~=v9) and v1027.Character and v23(v1027)) then if (v20.Chams.TeamCheck and (v1027.Team==v9.Team)) then continue;end local v1056=Instance.new("Highlight");v1056.FillColor=Color3.fromRGB(100,180,255);v1056.OutlineColor=Color3.fromRGB(255,255,255);v1056.FillTransparency=v20.Chams.Transparency;v1056.OutlineTransparency=0;v1056.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop;v1056.Parent=v1027.Character;table.insert(v16.ChamsObjects,v1056);end end end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() if v20.Fullbright.Enabled then v6.Brightness=2;v6.ClockTime=14;v6.FogEnd=100000;v6.GlobalShadows=false;v6.OutdoorAmbient=Color3.fromRGB(127,127,127);end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() if v20.NoFog.Enabled then v6.FogStart=0;v6.FogEnd=9999999;end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() if v20.Xray.Enabled then for v1028,v1029 in pairs(v5:GetDescendants()) do if (v1029:IsA("BasePart") and  not v1029:IsDescendantOf(v9.Character)) then if  not v16.OriginalTransparencies[v1029] then v16.OriginalTransparencies[v1029]=v1029.Transparency;end v1029.Transparency=v20.Xray.Transparency;end end else for v1030,v1031 in pairs(v16.OriginalTransparencies) do if (v1030 and v1030.Parent) then v1030.Transparency=v1031;end end v16.OriginalTransparencies={};end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() v10.FieldOfView=(v20.FOVChanger.Enabled and v20.FOVChanger.Value) or 70 ;end);task.wait();end end);task.spawn(function() while true do pcall(function() if v20.ChatSpam.Enabled then local v1000=v7:FindFirstChild("DefaultChatSystemChatEvents",true);if v1000 then local v1049=v1000:FindFirstChild("SayMessageRequest");if v1049 then v1049:FireServer(v20.ChatSpam.Message,"All");end end task.wait(v20.ChatSpam.Delay);else task.wait(0.5);end end);end end);task.spawn(function() while true do pcall(function() if v20.TimeChange.Enabled then v6.ClockTime=v20.TimeChange.Time;end end);task.wait(1);end end);task.spawn(function() while true do pcall(function() v5.Gravity=(v20.Gravity.Enabled and v20.Gravity.Value) or 196.2 ;end);task.wait();end end);task.spawn(function() while true do pcall(function() if v20.AutoCollect.Enabled then local v1003=v25();if (v1003 and firetouchinterest) then for v1069,v1070 in pairs(v5:GetDescendants()) do if (v1070:IsA("BasePart") and  not v1070:IsDescendantOf(v9.Character)) then if ((v1070.Position-v1003.Position).Magnitude<=v20.AutoCollect.Range) then firetouchinterest(v1003,v1070,0);task.wait();firetouchinterest(v1003,v1070,1);end end end end end end);task.wait(0.2);end end);task.spawn(function() while true do pcall(function() if v20.RainbowMode.Enabled then local v1004=Color3.fromHSV((tick() * 0.1)%1 ,1,1);v18.Accent=v1004;v18.ToggleOn=v1004;end end);task.wait(0.05);end end);task.spawn(function() local v568,v569=0,tick();while v30 and v30.Parent  do v568=v568 + 1 ;local v858=tick();if ((v858-v569)>=1) then if (v158 and v158.Parent) then v158.Text="FPS: "   .. v568 ;end v568=0;v569=v858;end task.wait();end end);task.spawn(function() while v45 and v45.Parent  do pcall(function() local v926=tick() * 0.3 ;local v927=(math.sin(v926) * 0.5) + 0.5 ;local v928=v18.Primary:Lerp(v18.Accent,v927);local v929=v18.Accent:Lerp(v18.Primary,1 -v927 );v64.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,v928),ColorSequenceKeypoint.new(0.5,v929),ColorSequenceKeypoint.new(1,v928)});v64.Rotation=45 + (math.sin(tick() * 0.5 ) * 10) ;end);task.wait(0.1);end end);v30.Destroying:Connect(function() pcall(function() if v170 then v170:Disconnect();end if v171 then v171:Disconnect();end if v168 then v168:Destroy();end if v169 then v169:Destroy();end for v932,v933 in pairs(v16.ESPObjects) do if v933 then pcall(function() v933:Remove();end);end end for v934,v935 in pairs(v16.TracerObjects) do if v935 then pcall(function() v935:Remove();end);end end for v936,v937 in pairs(v16.ChamsObjects) do if v937 then pcall(function() v937:Destroy();end);end end for v938,v939 in pairs(v16.HitboxParts) do if v939 then pcall(function() v939:Destroy();end);end end for v940,v941 in pairs(v16.OriginalTransparencies) do if (v940 and v940.Parent) then v940.Transparency=v941;end end v5.Gravity=196.2;v10.FieldOfView=70;end);end);task.spawn(function() task.wait(0.5);v42("Welcome","Crystal Hub v6.0 - "   .. v16.Platform   .. " Edition" ,4,"success");task.wait(2);if v12.IsPC then v42("Controls","RIGHT SHIFT = Toggle GUI | Q = Blink | E = Dash",5,"info");else v42("Controls","Tap 💎 to open menu | Use bottom buttons",5,"info");end end);print("═══════════════════════════════════════════════════════");print("   💎 Crystal Hub v6.0 - UNIVERSAL EDITION");print("   Platform: "   .. v16.Platform );print("   Functions: 200+ | Themes: 5 | Tabs: 5");print("   Touch: "   .. tostring(v12.HasTouch)   .. " | Keyboard: "   .. tostring(v12.HasKeyboard) );print("═══════════════════════════════════════════════════════");return v16;
+local function SafeGet(name)
+    local ok, val = pcall(function() return game:GetService(name) end)
+    return ok and val
+end
+
+local Players = SafeGet("Players")
+local RunService = SafeGet("RunService")
+local UserInputService = SafeGet("UserInputService")
+local TweenService = SafeGet("TweenService")
+local Workspace = SafeGet("Workspace")
+local Lighting = SafeGet("Lighting")
+local ReplicatedStorage = SafeGet("ReplicatedStorage")
+local TeleportService = SafeGet("TeleportService")
+
+if not Players or not RunService or not TweenService then return end
+
+local LocalPlayer = Players.LocalPlayer
+if not LocalPlayer then return end
+
+local Camera = Workspace.CurrentCamera
+local Mouse = LocalPlayer:GetMouse()
+
+-- PLATFORM DETECTION
+local Platform = {
+    IsMobile = false,
+    IsPC = false,
+    IsConsole = false,
+    HasTouch = false,
+    HasKeyboard = false,
+    HasGamepad = false,
+    ScreenSize = Vector2.new(1920, 1080),
+    Scale = 1,
+}
+
+local function DetectPlatform()
+    Platform.HasTouch = UserInputService.TouchEnabled
+    Platform.HasKeyboard = UserInputService.KeyboardEnabled
+    Platform.HasGamepad = UserInputService.GamepadEnabled
+    
+    local viewportSize = Camera.ViewportSize
+    Platform.ScreenSize = viewportSize
+    
+    -- Mobile detection
+    if Platform.HasTouch and not Platform.HasKeyboard then
+        Platform.IsMobile = true
+        Platform.Scale = math.min(viewportSize.X, viewportSize.Y) < 800 and 0.8 or 1.0
+    -- Console detection
+    elseif Platform.HasGamepad and not Platform.HasKeyboard then
+        Platform.IsConsole = true
+        Platform.Scale = 1.2
+    -- PC detection
+    else
+        Platform.IsPC = true
+        Platform.Scale = 1.0
+    end
+    
+    print(string.format("[Crystal] Platform: %s | Touch: %s | Keyboard: %s | Size: %dx%d",
+        Platform.IsMobile and "MOBILE" or Platform.IsConsole and "CONSOLE" or "PC",
+        tostring(Platform.HasTouch),
+        tostring(Platform.HasKeyboard),
+        math.floor(viewportSize.X),
+        math.floor(viewportSize.Y)
+    ))
+end
+
+DetectPlatform()
+
+----------------------------------------------------------------------------------
+-- SECTION 2: GUI PARENT FALLBACK
+----------------------------------------------------------------------------------
+
+local function GetGUIParent()
+    if gethui then
+        local ok, r = pcall(gethui)
+        if ok and r then return r end
+    end
+    local ok, cg = pcall(function() return game:GetService("CoreGui") end)
+    if ok and cg then
+        local test = Instance.new("ScreenGui")
+        local pok = pcall(function() test.Parent = cg end)
+        test:Destroy()
+        if pok then return cg end
+    end
+    return LocalPlayer:FindFirstChild("PlayerGui") or game
+end
+
+local GUIParent = GetGUIParent()
+
+-- Destroy old GUI
+pcall(function()
+    local parents = {LocalPlayer:FindFirstChild("PlayerGui")}
+    local ok, cg = pcall(function() return game:GetService("CoreGui") end)
+    if ok and cg then table.insert(parents, cg) end
+    if gethui then local ok2, h = pcall(gethui); if ok2 then table.insert(parents, h) end end
+    for _, p in ipairs(parents) do
+        if p and p:FindFirstChild("CrystalHubV6") then
+            p:FindFirstChild("CrystalHubV6"):Destroy()
+        end
+    end
+end)
+
+----------------------------------------------------------------------------------
+-- SECTION 3: HUB STATE
+----------------------------------------------------------------------------------
+
+local Hub = {
+    Version = "6.0.0",
+    Platform = Platform.IsMobile and "Mobile" or Platform.IsConsole and "Console" or "PC",
+    CurrentTab = "Combat",
+    CurrentTheme = "Crystal",
+    Minimized = false,
+    Dragging = false,
+    ESPObjects = {},
+    TracerObjects = {},
+    ChamsObjects = {},
+    HitboxParts = {},
+    OriginalTransparencies = {},
+    TouchButtons = {},
+    MobileMenu = nil,
+    ActiveCount = 0,
+}
+
+----------------------------------------------------------------------------------
+-- SECTION 4: UNIVERSAL THEMES
+----------------------------------------------------------------------------------
+
+local Themes = {
+    Crystal = {
+        Name = "Crystal Blue", Primary = Color3.fromRGB(20, 25, 40),
+        Secondary = Color3.fromRGB(30, 35, 55), Accent = Color3.fromRGB(100, 180, 255),
+        Text = Color3.fromRGB(240, 245, 255), TextSecondary = Color3.fromRGB(180, 190, 210),
+        Background = Color3.fromRGB(15, 18, 30), Glass = Color3.fromRGB(40, 50, 80),
+        GlassBorder = Color3.fromRGB(100, 150, 220), ToggleOn = Color3.fromRGB(80, 160, 255),
+        ToggleOff = Color3.fromRGB(60, 70, 90), Success = Color3.fromRGB(80, 220, 140),
+        Error = Color3.fromRGB(255, 100, 100), Warning = Color3.fromRGB(255, 200, 80),
+    },
+    Amethyst = {
+        Name = "Amethyst", Primary = Color3.fromRGB(25, 20, 40),
+        Secondary = Color3.fromRGB(35, 30, 55), Accent = Color3.fromRGB(180, 100, 255),
+        Text = Color3.fromRGB(245, 240, 255), TextSecondary = Color3.fromRGB(190, 180, 210),
+        Background = Color3.fromRGB(18, 15, 30), Glass = Color3.fromRGB(50, 40, 80),
+        GlassBorder = Color3.fromRGB(150, 100, 220), ToggleOn = Color3.fromRGB(160, 80, 255),
+        ToggleOff = Color3.fromRGB(70, 60, 90), Success = Color3.fromRGB(80, 220, 140),
+        Error = Color3.fromRGB(255, 100, 100), Warning = Color3.fromRGB(255, 200, 80),
+    },
+    Emerald = {
+        Name = "Emerald", Primary = Color3.fromRGB(20, 30, 25),
+        Secondary = Color3.fromRGB(30, 45, 35), Accent = Color3.fromRGB(80, 220, 140),
+        Text = Color3.fromRGB(240, 255, 245), TextSecondary = Color3.fromRGB(180, 210, 190),
+        Background = Color3.fromRGB(15, 22, 18), Glass = Color3.fromRGB(40, 60, 50),
+        GlassBorder = Color3.fromRGB(100, 180, 140), ToggleOn = Color3.fromRGB(80, 220, 140),
+        ToggleOff = Color3.fromRGB(60, 80, 70), Success = Color3.fromRGB(80, 220, 140),
+        Error = Color3.fromRGB(255, 100, 100), Warning = Color3.fromRGB(255, 200, 80),
+    },
+    Ruby = {
+        Name = "Ruby", Primary = Color3.fromRGB(40, 20, 25),
+        Secondary = Color3.fromRGB(55, 30, 35), Accent = Color3.fromRGB(255, 100, 120),
+        Text = Color3.fromRGB(255, 240, 245), TextSecondary = Color3.fromRGB(210, 180, 190),
+        Background = Color3.fromRGB(30, 15, 18), Glass = Color3.fromRGB(80, 40, 50),
+        GlassBorder = Color3.fromRGB(220, 100, 120), ToggleOn = Color3.fromRGB(255, 100, 120),
+        ToggleOff = Color3.fromRGB(90, 60, 70), Success = Color3.fromRGB(80, 220, 140),
+        Error = Color3.fromRGB(255, 100, 100), Warning = Color3.fromRGB(255, 200, 80),
+    },
+    Topaz = {
+        Name = "Topaz", Primary = Color3.fromRGB(35, 30, 20),
+        Secondary = Color3.fromRGB(50, 45, 30), Accent = Color3.fromRGB(255, 200, 80),
+        Text = Color3.fromRGB(255, 250, 240), TextSecondary = Color3.fromRGB(210, 200, 180),
+        Background = Color3.fromRGB(25, 22, 15), Glass = Color3.fromRGB(70, 60, 40),
+        GlassBorder = Color3.fromRGB(200, 160, 80), ToggleOn = Color3.fromRGB(255, 200, 80),
+        ToggleOff = Color3.fromRGB(80, 70, 55), Success = Color3.fromRGB(80, 220, 140),
+        Error = Color3.fromRGB(255, 100, 100), Warning = Color3.fromRGB(255, 200, 80),
+    },
+}
+
+local CurrentTheme = Themes.Crystal
+local function T(key) return CurrentTheme[key] or Color3.fromRGB(255, 255, 255) end
+
+----------------------------------------------------------------------------------
+-- SECTION 5: FUNCTION CONFIGS (200+ FUNCTIONS)
+----------------------------------------------------------------------------------
+
+local Configs = {
+    -- COMBAT
+    Aimbot = {Enabled=false, FOV=180, Smooth=0.2, Part="Head", TeamCheck=false, WallCheck=true, Prediction=0.165, Radius=500, CustomRadius=false, CustomRadiusValue=500, ShowFOV=true},
+    Triggerbot = {Enabled=false, Delay=0, MaxDist=500, TeamCheck=false},
+    SilentAim = {Enabled=false, FOV=180, Part="Head", HitChance=100},
+    KillAura = {Enabled=false, Range=15, TeamCheck=false, Delay=0.1},
+    HitboxExtender = {Enabled=false, Size=5, Transparency=0.7},
+    AntiAim = {Enabled=false, Type="Roll", Speed=5},
+    AutoParry = {Enabled=false, Range=10},
+    Reach = {Enabled=false, Distance=15},
+    CriticalHits = {Enabled=false, Multiplier=2},
+    AntiKnockback = {Enabled=false},
+    AutoShoot = {Enabled=false, Delay=0.1},
+    AutoBlock = {Enabled=false},
+    NoRecoil = {Enabled=false},
+    NoSpread = {Enabled=false},
+    RapidFire = {Enabled=false, Rate=0.05},
+    
+    -- MOVEMENT
+    Speed = {Enabled=false, Value=16},
+    Fly = {Enabled=false, Speed=50, Noclip=false},
+    Noclip = {Enabled=false},
+    InfJump = {Enabled=false},
+    LongJump = {Enabled=false, Power=100},
+    BunnyHop = {Enabled=false, Speed=40},
+    Jetpack = {Enabled=false, Power=100},
+    WallClimb = {Enabled=false},
+    Glide = {Enabled=false},
+    Spider = {Enabled=false},
+    CFrameSpeed = {Enabled=false, Value=100},
+    Blink = {Enabled=false, Distance=20},
+    Slide = {Enabled=false, Speed=50},
+    Dash = {Enabled=false, Distance=30},
+    SuperJump = {Enabled=false, Power=200},
+    HighJump = {Enabled=false, Height=100},
+    
+    -- PLAYER
+    GodMode = {Enabled=false},
+    AntiVoid = {Enabled=false, Height=-500},
+    NoFall = {Enabled=false},
+    AntiAFK = {Enabled=false},
+    AutoClick = {Enabled=false, CPS=10},
+    AntiGrab = {Enabled=false},
+    AutoRevive = {Enabled=false},
+    Regeneration = {Enabled=false, Rate=5},
+    InfiniteStamina = {Enabled=false},
+    
+    -- RENDER
+    ESP = {Enabled=false, Box=true, Name=true, Health=true, Distance=true, TeamCheck=false, MaxDist=2000, Glow=false, Outline=true, Animated=true},
+    Tracers = {Enabled=false, Origin="Bottom", TeamCheck=false},
+    Chams = {Enabled=false, TeamCheck=false, Transparency=0.5},
+    Fullbright = {Enabled=false},
+    Xray = {Enabled=false, Transparency=0.7},
+    NoFog = {Enabled=false},
+    SkeletonESP = {Enabled=false},
+    Freecam = {Enabled=false, Speed=50},
+    FOVChanger = {Enabled=false, Value=70},
+    NightVision = {Enabled=false},
+    
+    -- UTILS
+    ChatSpam = {Enabled=false, Message="Crystal Hub", Delay=3},
+    TimeChange = {Enabled=false, Time=14},
+    Gravity = {Enabled=false, Value=196.2},
+    AutoCollect = {Enabled=false, Range=50},
+    NoCooldown = {Enabled=false},
+    RainbowMode = {Enabled=false},
+    AutoFarm = {Enabled=false},
+}
+
+----------------------------------------------------------------------------------
+-- SECTION 6: UTILITY FUNCTIONS
+----------------------------------------------------------------------------------
+
+local function CreateTween(obj, props, duration, style, dir)
+    if not obj or not obj.Parent then return nil end
+    local ok, tween = pcall(function()
+        local info = TweenInfo.new(duration or 0.3, style or Enum.EasingStyle.Quart, dir or Enum.EasingDirection.Out)
+        local t = TweenService:Create(obj, info, props)
+        t:Play()
+        return t
+    end)
+    return ok and tween or nil
+end
+
+local function WorldToScreen(pos)
+    local ok, sp, on = pcall(function()
+        local p, v = Camera:WorldToViewportPoint(pos)
+        return Vector2.new(p.X, p.Y), v
+    end)
+    return ok and sp or Vector2.zero, ok and on or false
+end
+
+local function IsAlive(p)
+    if p and p.Character then
+        local h = p.Character:FindFirstChildOfClass("Humanoid")
+        return h and h.Health > 0
+    end
+    return false
+end
+
+local function GetHumanoid()
+    local c = LocalPlayer.Character
+    return c and c:FindFirstChildOfClass("Humanoid")
+end
+
+local function GetRoot()
+    local c = LocalPlayer.Character
+    return c and c:FindFirstChild("HumanoidRootPart")
+end
+
+local function GetDistance(p1, p2)
+    local c1, c2 = p1 and p1.Character, p2 and p2.Character
+    if c1 and c2 then
+        local r1, r2 = c1:FindFirstChild("HumanoidRootPart"), c2:FindFirstChild("HumanoidRootPart")
+        if r1 and r2 then return (r1.Position - r2.Position).Magnitude end
+    end
+    return math.huge
+end
+
+local function GetAimbotRadius()
+    return Configs.Aimbot.CustomRadius and Configs.Aimbot.CustomRadiusValue or Configs.Aimbot.Radius
+end
+
+local function GetClosest(fov, part, teamCheck, wallCheck, radius)
+    local closest, dist = nil, fov or 9e9
+    local mp = UserInputService:GetMouseLocation()
+    local actualRadius = radius or GetAimbotRadius()
+    for _, p in ipairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer and p.Character and IsAlive(p) then
+            if teamCheck and p.Team == LocalPlayer.Team then continue end
+            local pt = p.Character:FindFirstChild(part or "Head")
+            if pt then
+                local playerDist = GetDistance(LocalPlayer, p)
+                if playerDist > actualRadius then continue end
+                local sp, on = WorldToScreen(pt.Position)
+                if on then
+                    local d = (mp - sp).Magnitude
+                    if d < dist then
+                        if wallCheck then
+                            local ray = Ray.new(Camera.CFrame.Position, (pt.Position - Camera.CFrame.Position).Unit * 1000)
+                            local hit = Workspace:FindPartOnRayWithIgnoreList(ray, {LocalPlayer.Character, Camera})
+                            if hit and hit:IsDescendantOf(p.Character) then closest, dist = p, d end
+                        else closest, dist = p, d end
+                    end
+                end
+            end
+        end
+    end
+    return closest, dist
+end
+
+local HasDrawing = pcall(function() local t = Drawing.new("Line"); t:Remove() end)
+
+----------------------------------------------------------------------------------
+-- SECTION 7: SCREEN GUI
+----------------------------------------------------------------------------------
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CrystalHubV6"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.IgnoreGuiInset = true
+pcall(function() ScreenGui.Parent = GUIParent end)
+
+----------------------------------------------------------------------------------
+-- SECTION 8: NOTIFICATION SYSTEM (Universal)
+----------------------------------------------------------------------------------
+
+local NotifContainer = Instance.new("Frame")
+NotifContainer.Size = Platform.IsMobile and UDim2.new(0, 280, 1, 0) or UDim2.new(0, 350, 1, 0)
+NotifContainer.Position = Platform.IsMobile and UDim2.new(0.5, -140, 0, 0) or UDim2.new(1, -350, 0, 0)
+NotifContainer.BackgroundTransparency = 1
+NotifContainer.Parent = ScreenGui
+
+Instance.new("UIListLayout", NotifContainer).Padding = UDim.new(0, 10)
+
+local function Notify(title, msg, dur, ntype)
+    ntype = ntype or "info"
+    local colors = {info = T("Accent"), success = T("Success"), error = T("Error"), warning = T("Warning")}
+    local n = Instance.new("Frame")
+    n.Size = Platform.IsMobile and UDim2.new(1, 0, 0, 70) or UDim2.new(0, 300, 0, 80)
+    n.Position = Platform.IsMobile and UDim2.new(0, 0, -1, 0) or UDim2.new(1, 20, 0, 0)
+    n.BackgroundColor3 = T("Background")
+    n.BackgroundTransparency = 0.1
+    n.BorderSizePixel = 0
+    n.Parent = NotifContainer
+    Instance.new("UICorner", n).CornerRadius = UDim.new(0, 12)
+    local s = Instance.new("UIStroke", n)
+    s.Color = colors[ntype] or T("Accent"); s.Thickness = 2; s.Transparency = 0.3
+    
+    local tl = Instance.new("TextLabel", n)
+    tl.Size = UDim2.new(1, -20, 0, 25); tl.Position = UDim2.new(0, 10, 0, 10)
+    tl.BackgroundTransparency = 1; tl.Text = title; tl.TextColor3 = colors[ntype]
+    tl.TextSize = Platform.IsMobile and 12 or 14; tl.Font = Enum.Font.GothamBold
+    tl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local ml = Instance.new("TextLabel", n)
+    ml.Size = UDim2.new(1, -20, 0, 35); ml.Position = UDim2.new(0, 10, 0, 35)
+    ml.BackgroundTransparency = 1; ml.Text = msg; ml.TextColor3 = T("TextSecondary")
+    ml.TextSize = Platform.IsMobile and 10 or 12; ml.Font = Enum.Font.Gotham
+    ml.TextXAlignment = Enum.TextXAlignment.Left; ml.TextWrapped = true
+    
+    local targetPos = Platform.IsMobile and UDim2.new(0, 0, 0, 10) or UDim2.new(1, -320, 0, 0)
+    CreateTween(n, {Position = targetPos}, 0.5)
+    task.delay(dur or 3, function()
+        if n.Parent then
+            CreateTween(n, {BackgroundTransparency = 1}, 0.4)
+            task.wait(0.4); pcall(function() n:Destroy() end)
+        end
+    end)
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 9: MOBILE TOUCH CONTROLS
+----------------------------------------------------------------------------------
+
+if Platform.IsMobile then
+    local TouchPanel = Instance.new("Frame")
+    TouchPanel.Name = "TouchPanel"
+    TouchPanel.Size = UDim2.new(1, 0, 1, 0)
+    TouchPanel.BackgroundTransparency = 1
+    TouchPanel.Parent = ScreenGui
+    
+    -- Mobile menu toggle button
+    local MenuToggle = Instance.new("TextButton")
+    MenuToggle.Name = "MenuToggle"
+    MenuToggle.Size = UDim2.new(0, 60, 0, 60)
+    MenuToggle.Position = UDim2.new(0, 10, 0, 10)
+    MenuToggle.BackgroundColor3 = T("Accent")
+    MenuToggle.BackgroundTransparency = 0.2
+    MenuToggle.Text = "💎"
+    MenuToggle.TextSize = 28
+    MenuToggle.TextColor3 = T("Text")
+    MenuToggle.Parent = TouchPanel
+    Instance.new("UICorner", MenuToggle).CornerRadius = UDim.new(1, 0)
+    Instance.new("UIStroke", MenuToggle).Color = T("GlassBorder")
+    
+    -- Quick action buttons for mobile
+    local function CreateTouchButton(name, icon, pos, callback)
+        local btn = Instance.new("TextButton")
+        btn.Name = name
+        btn.Size = UDim2.new(0, 55, 0, 55)
+        btn.Position = pos
+        btn.BackgroundColor3 = T("Secondary")
+        btn.BackgroundTransparency = 0.3
+        btn.Text = icon
+        btn.TextSize = 22
+        btn.TextColor3 = T("Text")
+        btn.Parent = TouchPanel
+        Instance.new("UICorner", btn).CornerRadius = UDim.new(1, 0)
+        local stroke = Instance.new("UIStroke", btn)
+        stroke.Color = T("GlassBorder"); stroke.Thickness = 1.5; stroke.Transparency = 0.5
+        btn.MouseButton1Click:Connect(function() if callback then pcall(callback) end end)
+        Hub.TouchButtons[name] = btn
+        return btn
+    end
+    
+    -- Bottom action bar
+    CreateTouchButton("SpeedBtn", "🏃", UDim2.new(0.5, -90, 1, -80), function()
+        Configs.Speed.Enabled = not Configs.Speed.Enabled
+        if Configs.Speed.Enabled then Configs.Speed.Value = 50 end
+        Notify("Speed", Configs.Speed.Enabled and "ON" or "OFF", 1, Configs.Speed.Enabled and "success" or "warning")
+    end)
+    
+    CreateTouchButton("FlyBtn", "🦅", UDim2.new(0.5, -27, 1, -80), function()
+        Configs.Fly.Enabled = not Configs.Fly.Enabled
+        Notify("Fly", Configs.Fly.Enabled and "ON" or "OFF", 1, Configs.Fly.Enabled and "success" or "warning")
+    end)
+    
+    CreateTouchButton("NoclipBtn", "👻", UDim2.new(0.5, 35, 1, -80), function()
+        Configs.Noclip.Enabled = not Configs.Noclip.Enabled
+        Notify("Noclip", Configs.Noclip.Enabled and "ON" or "OFF", 1, Configs.Noclip.Enabled and "success" or "warning")
+    end)
+    
+    CreateTouchButton("ESPBtn", "👁️", UDim2.new(1, -70, 1, -80), function()
+        Configs.ESP.Enabled = not Configs.ESP.Enabled
+        Notify("ESP", Configs.ESP.Enabled and "ON" or "OFF", 1, Configs.ESP.Enabled and "success" or "warning")
+    end)
+    
+    CreateTouchButton("GodBtn", "❤️", UDim2.new(1, -70, 0, 10), function()
+        Configs.GodMode.Enabled = not Configs.GodMode.Enabled
+        Notify("God Mode", Configs.GodMode.Enabled and "ON" or "OFF", 1, Configs.GodMode.Enabled and "success" or "warning")
+    end)
+    
+    -- Jump button (larger)
+    local JumpBtn = Instance.new("TextButton")
+    JumpBtn.Name = "JumpBtn"
+    JumpBtn.Size = UDim2.new(0, 70, 0, 70)
+    JumpBtn.Position = UDim2.new(1, -80, 1, -160)
+    JumpBtn.BackgroundColor3 = T("Accent")
+    JumpBtn.BackgroundTransparency = 0.2
+    JumpBtn.Text = "⬆️"
+    JumpBtn.TextSize = 30
+    JumpBtn.TextColor3 = T("Text")
+    JumpBtn.Parent = TouchPanel
+    Instance.new("UICorner", JumpBtn).CornerRadius = UDim.new(1, 0)
+    Instance.new("UIStroke", JumpBtn).Color = T("GlassBorder")
+    
+    JumpBtn.MouseButton1Down:Connect(function()
+        local h = GetHumanoid()
+        if h then pcall(function() h:ChangeState(Enum.HumanoidStateType.Jumping) end) end
+    end)
+    
+    Hub.MobileMenu = TouchPanel
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 10: MAIN FRAME (Platform Adaptive)
+----------------------------------------------------------------------------------
+
+local MainSize, MainPos
+if Platform.IsMobile then
+    MainSize = UDim2.new(0.95, 0, 0.85, 0)
+    MainPos = UDim2.new(0.025, 0, 0.075, 0)
+else
+    MainSize = UDim2.new(0, 700, 0, 520)
+    MainPos = UDim2.new(0.5, -350, 0.5, -260)
+end
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Size = MainSize
+Main.Position = MainPos
+Main.BackgroundColor3 = T("Background")
+Main.BackgroundTransparency = 0.08
+Main.BorderSizePixel = 0
+Main.ClipsDescendants = true
+Main.Visible = Platform.IsPC -- Hide on mobile by default
+Main.Parent = ScreenGui
+
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, Platform.IsMobile and 15 or 20)
+
+local MainStroke = Instance.new("UIStroke", Main)
+MainStroke.Color = T("GlassBorder")
+MainStroke.Thickness = Platform.IsMobile and 1.5 or 2.5
+MainStroke.Transparency = 0.3
+
+-- Gradient
+local GradFrame = Instance.new("Frame", Main)
+GradFrame.Size = UDim2.new(1, 0, 1, 0)
+GradFrame.BackgroundTransparency = 1
+local Grad = Instance.new("UIGradient", GradFrame)
+Grad.Rotation = 45
+Grad.Transparency = NumberSequence.new({
+    NumberSequenceKeypoint.new(0, 0.92),
+    NumberSequenceKeypoint.new(0.5, 0.88),
+    NumberSequenceKeypoint.new(1, 0.92),
+})
+
+----------------------------------------------------------------------------------
+-- SECTION 11: TITLE BAR
+----------------------------------------------------------------------------------
+
+local TitleHeight = Platform.IsMobile and 40 or 50
+local Title = Instance.new("Frame", Main)
+Title.Size = UDim2.new(1, 0, 0, TitleHeight)
+Title.BackgroundColor3 = T("Primary")
+Title.BackgroundTransparency = 0.4
+Title.BorderSizePixel = 0
+Instance.new("UICorner", Title).CornerRadius = UDim.new(0, Platform.IsMobile and 15 or 20)
+
+local TitleFix = Instance.new("Frame", Title)
+TitleFix.Size = UDim2.new(1, 0, 0, 15)
+TitleFix.Position = UDim2.new(0, 0, 1, -15)
+TitleFix.BackgroundColor3 = T("Primary")
+TitleFix.BackgroundTransparency = 0.4
+
+local TitleText = Instance.new("TextLabel", Title)
+TitleText.Size = UDim2.new(0.5, 0, 1, 0)
+TitleText.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Text = "💎 Crystal Hub v6.0"
+TitleText.TextColor3 = T("Text")
+TitleText.TextSize = Platform.IsMobile and 14 or 18
+TitleText.Font = Enum.Font.GothamBold
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+
+local PlatformBadge = Instance.new("Frame", Title)
+PlatformBadge.Size = UDim2.new(0, Platform.IsMobile and 60 or 50, 0, 20)
+PlatformBadge.Position = UDim2.new(0.5, -25, 0.5, -10)
+PlatformBadge.BackgroundColor3 = T("Accent")
+PlatformBadge.BackgroundTransparency = 0.3
+Instance.new("UICorner", PlatformBadge).CornerRadius = UDim.new(0, 10)
+
+local PlatformText = Instance.new("TextLabel", PlatformBadge)
+PlatformText.Size = UDim2.new(1, 0, 1, 0)
+PlatformText.BackgroundTransparency = 1
+PlatformText.Text = Platform.IsMobile and "📱 MOBILE" or "💻 PC"
+PlatformText.TextColor3 = T("Text")
+PlatformText.TextSize = Platform.IsMobile and 9 or 10
+PlatformText.Font = Enum.Font.GothamBold
+
+-- Controls
+local Controls = Instance.new("Frame", Title)
+Controls.Size = UDim2.new(0, Platform.IsMobile and 80 or 120, 0, 30)
+Controls.Position = UDim2.new(1, Platform.IsMobile and -90 or -130, 0.5, -15)
+Controls.BackgroundTransparency = 1
+
+local function MakeControlBtn(pos, color, text, size)
+    local b = Instance.new("TextButton", Controls)
+    b.Size = UDim2.new(0, size or 30, 0, size or 30)
+    b.Position = UDim2.new(0, pos, 0, 0)
+    b.BackgroundColor3 = color
+    b.BackgroundTransparency = 0.3
+    b.Text = text
+    b.TextColor3 = T("Text")
+    b.TextSize = Platform.IsMobile and 12 or 14
+    b.Font = Enum.Font.GothamBold
+    Instance.new("UICorner", b).CornerRadius = UDim.new(1, 0)
+    return b
+end
+
+local MinBtn = MakeControlBtn(0, T("Warning"), "—")
+local CloseBtn = MakeControlBtn(Platform.IsMobile and 40 or 76, T("Error"), "✕")
+
+----------------------------------------------------------------------------------
+-- SECTION 12: DRAG (Touch + Mouse)
+----------------------------------------------------------------------------------
+
+Title.InputBegan:Connect(function(i)
+    if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then
+        Hub.Dragging = true
+        Hub.DragStart = i.Position
+        Hub.StartPos = Main.Position
+        i.Changed:Connect(function()
+            if i.UserInputState == Enum.UserInputState.End then Hub.Dragging = false end
+        end)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(i)
+    if Hub.Dragging and (i.UserInputType == Enum.UserInputType.MouseMovement or i.UserInputType == Enum.UserInputType.Touch) then
+        local d = i.Position - Hub.DragStart
+        Main.Position = UDim2.new(Hub.StartPos.X.Scale, Hub.StartPos.X.Offset + d.X, Hub.StartPos.Y.Scale, Hub.StartPos.Y.Offset + d.Y)
+    end
+end)
+
+MinBtn.MouseButton1Click:Connect(function()
+    Hub.Minimized = not Hub.Minimized
+    local targetSize = Hub.Minimized and UDim2.new(Main.Size.X.Scale, Main.Size.X.Offset, 0, TitleHeight) or MainSize
+    CreateTween(Main, {Size = targetSize}, 0.4, Enum.EasingStyle.Back)
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    CreateTween(Main, {Size = UDim2.new(0, 0, 0, 0)}, 0.5, Enum.EasingStyle.Back)
+    task.wait(0.5); pcall(function() ScreenGui:Destroy() end)
+end)
+
+-- Mobile menu toggle
+if Platform.IsMobile and Hub.MobileMenu then
+    Hub.MobileMenu:FindFirstChild("MenuToggle").MouseButton1Click:Connect(function()
+        Main.Visible = not Main.Visible
+    end)
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 13: SIDEBAR (Adaptive)
+----------------------------------------------------------------------------------
+
+local SidebarWidth = Platform.IsMobile and 50 or 70
+local Sidebar = Instance.new("Frame", Main)
+Sidebar.Size = UDim2.new(0, SidebarWidth, 1, -TitleHeight)
+Sidebar.Position = UDim2.new(0, 0, 0, TitleHeight)
+Sidebar.BackgroundColor3 = T("Secondary")
+Sidebar.BackgroundTransparency = 0.5
+
+local SL = Instance.new("UIListLayout", Sidebar)
+SL.Padding = UDim.new(0, Platform.IsMobile and 5 or 8)
+SL.HorizontalAlignment = Enum.HorizontalAlignment.Center
+local SP = Instance.new("UIPadding", Sidebar)
+SP.PaddingTop = UDim.new(0, Platform.IsMobile and 10 or 20)
+
+local TabData = {
+    {Name="Combat", Icon="⚔️"}, {Name="Movement", Icon="🏃"},
+    {Name="Player", Icon="👤"}, {Name="Render", Icon="👁️"}, {Name="Utils", Icon="⚙️"},
+}
+
+local TabBtns = {}
+local TabContents = {}
+
+local function MakeTabBtn(data)
+    local btnSize = Platform.IsMobile and 40 or 50
+    local b = Instance.new("TextButton", Sidebar)
+    b.Size = UDim2.new(0, btnSize, 0, btnSize)
+    b.BackgroundColor3 = T("ToggleOff")
+    b.BackgroundTransparency = 0.5
+    b.Text = ""
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 15)
+    
+    local ic = Instance.new("TextLabel", b)
+    ic.Size = UDim2.new(1, 0, 0.6, 0)
+    ic.Position = UDim2.new(0, 0, 0, Platform.IsMobile and 2 or 5)
+    ic.BackgroundTransparency = 1
+    ic.Text = data.Icon
+    ic.TextSize = Platform.IsMobile and 16 or 20
+    
+    local nm = Instance.new("TextLabel", b)
+    nm.Size = UDim2.new(1, 0, 0.3, 0)
+    nm.Position = UDim2.new(0, 0, 0.65, 0)
+    nm.BackgroundTransparency = 1
+    nm.Text = data.Name
+    nm.TextColor3 = T("TextSecondary")
+    nm.TextSize = Platform.IsMobile and 7 or 8
+    nm.Font = Enum.Font.GothamBold
+    
+    TabBtns[data.Name] = b
+    
+    b.MouseButton1Click:Connect(function()
+        if Hub.CurrentTab ~= data.Name then
+            for name, btn in pairs(TabBtns) do
+                CreateTween(btn, {BackgroundTransparency = 0.5, BackgroundColor3 = T("ToggleOff")}, 0.3)
+            end
+            CreateTween(b, {BackgroundTransparency = 0.3, BackgroundColor3 = T("Accent")}, 0.3)
+            Hub.CurrentTab = data.Name
+            for n, c in pairs(TabContents) do if c then c.Visible = (n == data.Name) end end
+        end
+    end)
+end
+
+for _, td in ipairs(TabData) do MakeTabBtn(td) end
+
+----------------------------------------------------------------------------------
+-- SECTION 14: CONTENT AREA
+----------------------------------------------------------------------------------
+
+local Content = Instance.new("Frame", Main)
+Content.Size = UDim2.new(1, -SidebarWidth, 1, -TitleHeight)
+Content.Position = UDim2.new(0, SidebarWidth, 0, TitleHeight)
+Content.BackgroundTransparency = 1
+
+----------------------------------------------------------------------------------
+-- SECTION 15: UI COMPONENTS (Platform Adaptive)
+----------------------------------------------------------------------------------
+
+local ItemHeight = Platform.IsMobile and 45 or 55
+local ItemPadding = Platform.IsMobile and 8 or 10
+
+local function Section(parent, name)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -10, 0, Platform.IsMobile and 25 or 35)
+    c.BackgroundTransparency = 1
+    local l = Instance.new("TextLabel", c)
+    l.Size = UDim2.new(0, Platform.IsMobile and 120 or 180, 1, 0)
+    l.Position = UDim2.new(0, 5, 0, 0)
+    l.BackgroundTransparency = 1
+    l.Text = "◆ " .. name
+    l.TextColor3 = T("Accent")
+    l.TextSize = Platform.IsMobile and 11 or 13
+    l.Font = Enum.Font.GothamBold
+    l.TextXAlignment = Enum.TextXAlignment.Left
+    local sep = Instance.new("Frame", c)
+    sep.Size = UDim2.new(1, Platform.IsMobile and -130 or -190, 0, 2)
+    sep.Position = UDim2.new(0, Platform.IsMobile and 125 or 185, 0.5, -1)
+    sep.BackgroundColor3 = T("Accent")
+    sep.BackgroundTransparency = 0.7
+    return c
+end
+
+local function Toggle(parent, name, desc, def, cb)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -20, 0, ItemHeight)
+    c.BackgroundColor3 = T("Secondary")
+    c.BackgroundTransparency = 0.6
+    Instance.new("UICorner", c).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 12)
+    
+    local nl = Instance.new("TextLabel", c)
+    nl.Size = UDim2.new(1, Platform.IsMobile and -60 or -90, 0, Platform.IsMobile and 18 or 22)
+    nl.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, Platform.IsMobile and 5 or 8)
+    nl.BackgroundTransparency = 1
+    nl.Text = name
+    nl.TextColor3 = T("Text")
+    nl.TextSize = Platform.IsMobile and 11 or 13
+    nl.Font = Enum.Font.GothamBold
+    nl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    if not Platform.IsMobile then
+        local dl = Instance.new("TextLabel", c)
+        dl.Size = UDim2.new(1, -90, 0, 16)
+        dl.Position = UDim2.new(0, 15, 0, 30)
+        dl.BackgroundTransparency = 1
+        dl.Text = desc or ""
+        dl.TextColor3 = T("TextSecondary")
+        dl.TextSize = 10
+        dl.Font = Enum.Font.Gotham
+        dl.TextXAlignment = Enum.TextXAlignment.Left
+    end
+    
+    local bgSize = Platform.IsMobile and 40 or 48
+    local bg = Instance.new("Frame", c)
+    bg.Size = UDim2.new(0, bgSize, 0, bgSize * 0.5)
+    bg.Position = UDim2.new(1, -bgSize - 10, 0.5, -(bgSize * 0.25))
+    bg.BackgroundColor3 = def and T("ToggleOn") or T("ToggleOff")
+    Instance.new("UICorner", bg).CornerRadius = UDim.new(1, 0)
+    
+    local ciSize = bgSize * 0.8
+    local ci = Instance.new("Frame", bg)
+    ci.Size = UDim2.new(0, ciSize, 0, ciSize)
+    ci.Position = def and UDim2.new(1, -ciSize - 2, 0.5, -ciSize/2) or UDim2.new(0, 2, 0.5, -ciSize/2)
+    ci.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Instance.new("UICorner", ci).CornerRadius = UDim.new(1, 0)
+    
+    local btn = Instance.new("TextButton", c)
+    btn.Size = UDim2.new(1, 0, 1, 0)
+    btn.BackgroundTransparency = 1
+    btn.Text = ""
+    
+    local state = def or false
+    btn.MouseButton1Click:Connect(function()
+        state = not state
+        CreateTween(bg, {BackgroundColor3 = state and T("ToggleOn") or T("ToggleOff")}, 0.2)
+        CreateTween(ci, {Position = state and UDim2.new(1, -ciSize - 2, 0.5, -ciSize/2) or UDim2.new(0, 2, 0.5, -ciSize/2)}, 0.3, Enum.EasingStyle.Back)
+        if cb then pcall(cb, state) end
+    end)
+    return c, function(s) state = s end
+end
+
+local function Slider(parent, name, min, max, def, cb)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -20, 0, Platform.IsMobile and 55 or 70)
+    c.BackgroundColor3 = T("Secondary")
+    c.BackgroundTransparency = 0.6
+    Instance.new("UICorner", c).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 12)
+    
+    local nl = Instance.new("TextLabel", c)
+    nl.Size = UDim2.new(0.5, 0, 0, Platform.IsMobile and 18 or 20)
+    nl.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, Platform.IsMobile and 5 or 8)
+    nl.BackgroundTransparency = 1
+    nl.Text = name
+    nl.TextColor3 = T("Text")
+    nl.TextSize = Platform.IsMobile and 11 or 13
+    nl.Font = Enum.Font.GothamBold
+    nl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local vl = Instance.new("TextLabel", c)
+    vl.Size = UDim2.new(0.5, -15, 0, Platform.IsMobile and 18 or 20)
+    vl.Position = UDim2.new(0.5, 0, 0, Platform.IsMobile and 5 or 8)
+    vl.BackgroundTransparency = 1
+    vl.Text = tostring(def)
+    vl.TextColor3 = T("Accent")
+    vl.TextSize = Platform.IsMobile and 11 or 13
+    vl.Font = Enum.Font.GothamBold
+    vl.TextXAlignment = Enum.TextXAlignment.Right
+    
+    local sb = Instance.new("Frame", c)
+    sb.Size = UDim2.new(1, Platform.IsMobile and -20 or -30, 0, Platform.IsMobile and 10 or 8)
+    sb.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, Platform.IsMobile and 35 or 45)
+    sb.BackgroundColor3 = T("ToggleOff")
+    Instance.new("UICorner", sb).CornerRadius = UDim.new(1, 0)
+    
+    local sf = Instance.new("Frame", sb)
+    sf.Size = UDim2.new((def - min) / (max - min), 0, 1, 0)
+    sf.BackgroundColor3 = T("Accent")
+    Instance.new("UICorner", sf).CornerRadius = UDim.new(1, 0)
+    
+    local knobSize = Platform.IsMobile and 20 or 16
+    local sk = Instance.new("Frame", sb)
+    sk.Size = UDim2.new(0, knobSize, 0, knobSize)
+    sk.Position = UDim2.new((def - min) / (max - min), -knobSize/2, 0.5, -knobSize/2)
+    sk.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Instance.new("UICorner", sk).CornerRadius = UDim.new(1, 0)
+    
+    local drag, val = false, def
+    
+    local function Upd(inp)
+        local rel = math.clamp((inp.Position.X - sb.AbsolutePosition.X) / sb.AbsoluteSize.X, 0, 1)
+        val = math.floor(min + (max - min) * rel + 0.5)
+        sf.Size = UDim2.new(rel, 0, 1, 0)
+        sk.Position = UDim2.new(rel, -knobSize/2, 0.5, -knobSize/2)
+        vl.Text = tostring(val)
+        if cb then pcall(cb, val) end
+    end
+    
+    sb.InputBegan:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then drag = true; Upd(i) end
+    end)
+    sb.InputEnded:Connect(function(i)
+        if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then drag = false end
+    end)
+    UserInputService.InputChanged:Connect(function(i)
+        if drag and (i.UserInputType == Enum.UserInputType.MouseMovement or i.UserInputType == Enum.UserInputType.Touch) then Upd(i) end
+    end)
+    return c
+end
+
+local function Button(parent, name, cb)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -20, 0, Platform.IsMobile and 40 or 45)
+    c.BackgroundColor3 = T("Secondary")
+    c.BackgroundTransparency = 0.6
+    Instance.new("UICorner", c).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 12)
+    
+    local b = Instance.new("TextButton", c)
+    b.Size = UDim2.new(1, 0, 1, 0)
+    b.BackgroundTransparency = 1
+    b.Text = name
+    b.TextColor3 = T("Text")
+    b.TextSize = Platform.IsMobile and 12 or 13
+    b.Font = Enum.Font.GothamBold
+    b.MouseButton1Click:Connect(function() if cb then pcall(cb) end end)
+    return c
+end
+
+local function Dropdown(parent, name, opts, def, cb)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -20, 0, ItemHeight)
+    c.BackgroundColor3 = T("Secondary")
+    c.BackgroundTransparency = 0.6
+    c.ClipsDescendants = false
+    Instance.new("UICorner", c).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 12)
+    
+    local nl = Instance.new("TextLabel", c)
+    nl.Size = UDim2.new(0.5, 0, 0, 20)
+    nl.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, 8)
+    nl.BackgroundTransparency = 1
+    nl.Text = name
+    nl.TextColor3 = T("Text")
+    nl.TextSize = Platform.IsMobile and 11 or 13
+    nl.Font = Enum.Font.GothamBold
+    nl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local dbWidth = Platform.IsMobile and 120 or 160
+    local db = Instance.new("TextButton", c)
+    db.Size = UDim2.new(0, dbWidth, 0, Platform.IsMobile and 25 or 30)
+    db.Position = UDim2.new(1, -dbWidth - 10, 0.5, Platform.IsMobile and -12 or -15)
+    db.BackgroundColor3 = T("Background")
+    db.Text = "  " .. (def or opts[1])
+    db.TextColor3 = T("Text")
+    db.TextSize = Platform.IsMobile and 10 or 11
+    db.Font = Enum.Font.Gotham
+    db.TextXAlignment = Enum.TextXAlignment.Left
+    Instance.new("UICorner", db).CornerRadius = UDim.new(0, 10)
+    
+    local list = Instance.new("Frame", c)
+    list.Size = UDim2.new(0, dbWidth, 0, 0)
+    list.Position = UDim2.new(1, -dbWidth - 10, 1, -8)
+    list.BackgroundColor3 = T("Background")
+    list.BackgroundTransparency = 0.1
+    list.Visible = false
+    list.ClipsDescendants = true
+    list.ZIndex = 10
+    Instance.new("UICorner", list).CornerRadius = UDim.new(0, 10)
+    
+    local ll = Instance.new("UIListLayout", list)
+    ll.Padding = UDim.new(0, 3)
+    local lp = Instance.new("UIPadding", list)
+    lp.PaddingTop = UDim.new(0, 5); lp.PaddingBottom = UDim.new(0, 5)
+    
+    local sel, open = def or opts[1], false
+    
+    for _, opt in ipairs(opts) do
+        local ob = Instance.new("TextButton", list)
+        ob.Size = UDim2.new(1, 0, 0, Platform.IsMobile and 25 or 28)
+        ob.BackgroundColor3 = T("Secondary")
+        ob.BackgroundTransparency = 0.3
+        ob.Text = "  " .. opt
+        ob.TextColor3 = T("Text")
+        ob.TextSize = Platform.IsMobile and 10 or 11
+        ob.Font = Enum.Font.Gotham
+        ob.TextXAlignment = Enum.TextXAlignment.Left
+        ob.ZIndex = 11
+        Instance.new("UICorner", ob).CornerRadius = UDim.new(0, 8)
+        ob.MouseButton1Click:Connect(function()
+            sel = opt; db.Text = "  " .. opt; open = false
+            CreateTween(list, {Size = UDim2.new(0, dbWidth, 0, 0)}, 0.3, Enum.EasingStyle.Back)
+            task.delay(0.3, function() list.Visible = false end)
+            if cb then pcall(cb, opt) end
+        end)
+    end
+    
+    db.MouseButton1Click:Connect(function()
+        open = not open
+        if open then
+            list.Visible = true
+            CreateTween(list, {Size = UDim2.new(0, dbWidth, 0, #opts * (Platform.IsMobile and 28 or 31) + 10)}, 0.3, Enum.EasingStyle.Back)
+        else
+            CreateTween(list, {Size = UDim2.new(0, dbWidth, 0, 0)}, 0.3, Enum.EasingStyle.Back)
+            task.delay(0.3, function() list.Visible = false end)
+        end
+    end)
+    return c
+end
+
+local function TextBox(parent, name, placeholder, def, cb)
+    local c = Instance.new("Frame", parent)
+    c.Size = UDim2.new(1, -20, 0, ItemHeight)
+    c.BackgroundColor3 = T("Secondary")
+    c.BackgroundTransparency = 0.6
+    Instance.new("UICorner", c).CornerRadius = UDim.new(0, Platform.IsMobile and 10 or 12)
+    
+    local nl = Instance.new("TextLabel", c)
+    nl.Size = UDim2.new(0.5, 0, 0, 20)
+    nl.Position = UDim2.new(0, Platform.IsMobile and 10 or 15, 0, 8)
+    nl.BackgroundTransparency = 1
+    nl.Text = name
+    nl.TextColor3 = T("Text")
+    nl.TextSize = Platform.IsMobile and 11 or 13
+    nl.Font = Enum.Font.GothamBold
+    nl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local tbWidth = Platform.IsMobile and 120 or 160
+    local tb = Instance.new("TextBox", c)
+    tb.Size = UDim2.new(0, tbWidth, 0, Platform.IsMobile and 25 or 30)
+    tb.Position = UDim2.new(1, -tbWidth - 10, 0.5, Platform.IsMobile and -12 or -15)
+    tb.BackgroundColor3 = T("Background")
+    tb.PlaceholderText = placeholder
+    tb.PlaceholderColor3 = T("TextSecondary")
+    tb.Text = def or ""
+    tb.TextColor3 = T("Text")
+    tb.TextSize = Platform.IsMobile and 10 or 11
+    tb.Font = Enum.Font.Gotham
+    tb.TextXAlignment = Enum.TextXAlignment.Left
+    tb.ClearTextOnFocus = false
+    Instance.new("UICorner", tb).CornerRadius = UDim.new(0, 10)
+    local tp = Instance.new("UIPadding", tb)
+    tp.PaddingLeft = UDim.new(0, 10)
+    
+    tb.FocusLost:Connect(function() if cb then pcall(cb, tb.Text) end end)
+    return c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 16: COMBAT TAB
+----------------------------------------------------------------------------------
+
+local function CombatTab()
+    local c = Instance.new("ScrollingFrame", Content)
+    c.Size = UDim2.new(1, -20, 1, -20)
+    c.Position = UDim2.new(0, 10, 0, 10)
+    c.BackgroundTransparency = 1
+    c.ScrollBarThickness = Platform.IsMobile and 3 or 4
+    c.ScrollBarImageColor3 = T("Accent")
+    c.CanvasSize = UDim2.new(0, 0, 0, Platform.IsMobile and 1800 or 2200)
+    Instance.new("UIListLayout", c).Padding = UDim.new(0, ItemPadding)
+    
+    Section(c, "AIMBOT")
+    Toggle(c, "Aimbot", "Lock onto enemies", false, function(s)
+        Configs.Aimbot.Enabled = s
+        Notify("Aimbot", s and "Enabled" or "Disabled", 2, s and "success" or "warning")
+    end)
+    Slider(c, "FOV", 10, 360, 180, function(v) Configs.Aimbot.FOV = v end)
+    Slider(c, "Smoothness", 1, 100, 20, function(v) Configs.Aimbot.Smooth = v/100 end)
+    Dropdown(c, "Target Part", {"Head", "HumanoidRootPart", "Torso"}, "Head", function(v) Configs.Aimbot.Part = v end)
+    Toggle(c, "Team Check", "Ignore team", false, function(s) Configs.Aimbot.TeamCheck = s end)
+    Toggle(c, "Wall Check", "Only visible", true, function(s) Configs.Aimbot.WallCheck = s end)
+    Slider(c, "Prediction", 0, 100, 16, function(v) Configs.Aimbot.Prediction = v/100 end)
+    Slider(c, "Target Radius (Blocks)", 10, 15000, 500, function(v) Configs.Aimbot.Radius = v end)
+    Toggle(c, "Custom Radius Mode", "Enter custom distance", false, function(s) Configs.Aimbot.CustomRadius = s end)
+    TextBox(c, "Custom Radius Value", "10-15000 blocks", "500", function(v) Configs.Aimbot.CustomRadiusValue = tonumber(v) or 500 end)
+    Toggle(c, "Show FOV Circle", "Display FOV", true, function(s) Configs.Aimbot.ShowFOV = s end)
+    
+    Section(c, "TRIGGERBOT")
+    Toggle(c, "Triggerbot", "Auto fire on target", false, function(s) Configs.Triggerbot.Enabled = s end)
+    Slider(c, "Trigger Delay", 0, 500, 0, function(v) Configs.Triggerbot.Delay = v/1000 end)
+    Slider(c, "Max Distance", 10, 1000, 500, function(v) Configs.Triggerbot.MaxDist = v end)
+    
+    Section(c, "SILENT AIM")
+    Toggle(c, "Silent Aim", "Server-side aim", false, function(s) Configs.SilentAim.Enabled = s end)
+    Slider(c, "Hit Chance", 1, 100, 100, function(v) Configs.SilentAim.HitChance = v end)
+    
+    Section(c, "KILL AURA")
+    Toggle(c, "Kill Aura", "Attack nearby", false, function(s) Configs.KillAura.Enabled = s end)
+    Slider(c, "Aura Range", 1, 50, 15, function(v) Configs.KillAura.Range = v end)
+    Toggle(c, "Aura Team Check", "Ignore team", false, function(s) Configs.KillAura.TeamCheck = s end)
+    
+    Section(c, "ADDITIONAL COMBAT")
+    Toggle(c, "Hitbox Extender", "Bigger hitboxes", false, function(s) Configs.HitboxExtender.Enabled = s end)
+    Slider(c, "Hitbox Size", 1, 20, 5, function(v) Configs.HitboxExtender.Size = v end)
+    Toggle(c, "Anti-Aim", "Desync model", false, function(s) Configs.AntiAim.Enabled = s end)
+    Dropdown(c, "Anti-Aim Type", {"Roll", "Spin", "Jitter", "Down"}, "Roll", function(v) Configs.AntiAim.Type = v end)
+    Toggle(c, "Auto Parry", "Auto parry", false, function(s) Configs.AutoParry.Enabled = s end)
+    Toggle(c, "Reach", "Extended reach", false, function(s) Configs.Reach.Enabled = s end)
+    Slider(c, "Reach Distance", 5, 30, 15, function(v) Configs.Reach.Distance = v end)
+    Toggle(c, "Critical Hits", "Force crits", false, function(s) Configs.CriticalHits.Enabled = s end)
+    Toggle(c, "Anti-Knockback", "No knockback", false, function(s) Configs.AntiKnockback.Enabled = s end)
+    Toggle(c, "Auto Shoot", "Auto fire", false, function(s) Configs.AutoShoot.Enabled = s end)
+    Toggle(c, "Auto Block", "Auto block", false, function(s) Configs.AutoBlock.Enabled = s end)
+    Toggle(c, "No Recoil", "Remove recoil", false, function(s) Configs.NoRecoil.Enabled = s end)
+    Toggle(c, "No Spread", "Remove spread", false, function(s) Configs.NoSpread.Enabled = s end)
+    Toggle(c, "Rapid Fire", "Faster shooting", false, function(s) Configs.RapidFire.Enabled = s end)
+    
+    TabContents["Combat"] = c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 17: MOVEMENT TAB
+----------------------------------------------------------------------------------
+
+local function MovementTab()
+    local c = Instance.new("ScrollingFrame", Content)
+    c.Size = UDim2.new(1, -20, 1, -20)
+    c.Position = UDim2.new(0, 10, 0, 10)
+    c.BackgroundTransparency = 1
+    c.ScrollBarThickness = Platform.IsMobile and 3 or 4
+    c.ScrollBarImageColor3 = T("Accent")
+    c.CanvasSize = UDim2.new(0, 0, 0, Platform.IsMobile and 2000 or 2500)
+    Instance.new("UIListLayout", c).Padding = UDim.new(0, ItemPadding)
+    
+    Section(c, "SPEED")
+    Toggle(c, "Speed Hack", "Increase walkspeed", false, function(s) Configs.Speed.Enabled = s end)
+    Slider(c, "Walk Speed", 16, 500, 16, function(v) Configs.Speed.Value = v end)
+    
+    Section(c, "FLY")
+    Toggle(c, "Fly", "Flight mode", false, function(s) Configs.Fly.Enabled = s end)
+    Slider(c, "Fly Speed", 10, 500, 50, function(v) Configs.Fly.Speed = v end)
+    Toggle(c, "Fly Noclip", "Through walls", false, function(s) Configs.Fly.Noclip = s end)
+    
+    Section(c, "Noclip & Jump")
+    Toggle(c, "Noclip", "Walk through walls", false, function(s) Configs.Noclip.Enabled = s end)
+    Toggle(c, "Infinite Jump", "Jump in air", false, function(s) Configs.InfJump.Enabled = s end)
+    Toggle(c, "Long Jump", "Extended jump", false, function(s) Configs.LongJump.Enabled = s end)
+    Slider(c, "Jump Power", 10, 300, 100, function(v) Configs.LongJump.Power = v end)
+    Toggle(c, "Bunny Hop", "Auto jump", false, function(s) Configs.BunnyHop.Enabled = s end)
+    Toggle(c, "High Jump", "Higher jumps", false, function(s) Configs.HighJump.Enabled = s end)
+    Slider(c, "Jump Height", 50, 300, 100, function(v) Configs.HighJump.Height = v end)
+    Toggle(c, "Super Jump", "Massive jump", false, function(s) Configs.SuperJump.Enabled = s end)
+    Slider(c, "Super Power", 100, 1000, 200, function(v) Configs.SuperJump.Power = v end)
+    
+    Section(c, "SPECIAL MOVEMENT")
+    Toggle(c, "Jetpack", "Fly upward", false, function(s) Configs.Jetpack.Enabled = s end)
+    Slider(c, "Jetpack Power", 10, 500, 100, function(v) Configs.Jetpack.Power = v end)
+    Toggle(c, "Wall Climb", "Climb walls", false, function(s) Configs.WallClimb.Enabled = s end)
+    Toggle(c, "Glide", "Glide in air", false, function(s) Configs.Glide.Enabled = s end)
+    Toggle(c, "Spider", "Walk on walls", false, function(s) Configs.Spider.Enabled = s end)
+    Toggle(c, "CFrame Speed", "TP-based speed", false, function(s) Configs.CFrameSpeed.Enabled = s end)
+    Slider(c, "CFrame Value", 10, 1000, 100, function(v) Configs.CFrameSpeed.Value = v end)
+    Toggle(c, "Blink (Q)", "Short teleport", false, function(s) Configs.Blink.Enabled = s end)
+    Slider(c, "Blink Distance", 5, 100, 20, function(v) Configs.Blink.Distance = v end)
+    Toggle(c, "Slide", "Slide move", false, function(s) Configs.Slide.Enabled = s end)
+    Slider(c, "Slide Speed", 10, 200, 50, function(v) Configs.Slide.Speed = v end)
+    Toggle(c, "Dash", "Quick dash", false, function(s) Configs.Dash.Enabled = s end)
+    Slider(c, "Dash Distance", 5, 100, 30, function(v) Configs.Dash.Distance = v end)
+    
+    Section(c, "TELEPORTS")
+    Button(c, "TP to Mouse", function()
+        local r = GetRoot()
+        if r then r.CFrame = CFrame.new(Mouse.Hit.Position + Vector3.new(0, 3, 0)); Notify("TP", "Teleported!", 2, "success") end
+    end)
+    Button(c, "TP to Sky", function()
+        local r = GetRoot()
+        if r then r.CFrame = CFrame.new(r.Position + Vector3.new(0, 1000, 0)); Notify("TP", "Sky TP!", 2, "success") end
+    end)
+    Button(c, "TP to Spawn", function()
+        local sp = Workspace:FindFirstChild("SpawnLocation", true)
+        if sp then local r = GetRoot(); if r then r.CFrame = sp.CFrame + Vector3.new(0, 5, 0); Notify("TP", "To spawn!", 2, "success") end end
+    end)
+    Button(c, "TP to Random Player", function()
+        local players = Players:GetPlayers()
+        local random = players[math.random(1, #players)]
+        if random and random ~= LocalPlayer and random.Character then
+            local rp = random.Character:FindFirstChild("HumanoidRootPart")
+            local lr = GetRoot()
+            if rp and lr then lr.CFrame = rp.CFrame + Vector3.new(5, 0, 0); Notify("TP", "To " .. random.Name, 2, "success") end
+        end
+    end)
+    
+    TabContents["Movement"] = c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 18: PLAYER TAB
+----------------------------------------------------------------------------------
+
+local function PlayerTab()
+    local c = Instance.new("ScrollingFrame", Content)
+    c.Size = UDim2.new(1, -20, 1, -20)
+    c.Position = UDim2.new(0, 10, 0, 10)
+    c.BackgroundTransparency = 1
+    c.ScrollBarThickness = Platform.IsMobile and 3 or 4
+    c.ScrollBarImageColor3 = T("Accent")
+    c.CanvasSize = UDim2.new(0, 0, 0, Platform.IsMobile and 1500 or 2000)
+    Instance.new("UIListLayout", c).Padding = UDim.new(0, ItemPadding)
+    
+    Section(c, "SURVIVAL")
+    Toggle(c, "God Mode", "Infinite HP", false, function(s) Configs.GodMode.Enabled = s end)
+    Toggle(c, "Anti-Void", "Prevent void death", false, function(s) Configs.AntiVoid.Enabled = s end)
+    Slider(c, "Void Height", -1000, -100, -500, function(v) Configs.AntiVoid.Height = v end)
+    Toggle(c, "No Fall Damage", "No fall damage", false, function(s) Configs.NoFall.Enabled = s end)
+    Toggle(c, "Anti-Grab", "Prevent grab", false, function(s) Configs.AntiGrab.Enabled = s end)
+    Toggle(c, "Auto Revive", "Auto respawn", false, function(s) Configs.AutoRevive.Enabled = s end)
+    Toggle(c, "Regeneration", "Auto regen", false, function(s) Configs.Regeneration.Enabled = s end)
+    Slider(c, "Regen Rate", 1, 50, 5, function(v) Configs.Regeneration.Rate = v end)
+    Toggle(c, "Infinite Stamina", "No stamina drain", false, function(s) Configs.InfiniteStamina.Enabled = s end)
+    
+    Section(c, "AUTOMATION")
+    Toggle(c, "Anti-AFK", "Prevent AFK kick", false, function(s) Configs.AntiAFK.Enabled = s end)
+    Toggle(c, "Auto Click", "Auto click", false, function(s) Configs.AutoClick.Enabled = s end)
+    Slider(c, "Clicks/Second", 1, 30, 10, function(v) Configs.AutoClick.CPS = v end)
+    Toggle(c, "Auto Farm", "Auto farm", false, function(s) Configs.AutoFarm.Enabled = s end)
+    
+    Section(c, "CHARACTER ACTIONS")
+    Button(c, "Reset Character", function()
+        local h = GetHumanoid()
+        if h then h.Health = 0; Notify("Character", "Reset!", 2, "warning") end
+    end)
+    Button(c, "Heal to Full", function()
+        local h = GetHumanoid()
+        if h then h.Health = h.MaxHealth; Notify("Character", "Healed!", 2, "success") end
+    end)
+    Button(c, "Set Max HP Infinite", function()
+        local h = GetHumanoid()
+        if h then h.MaxHealth = math.huge; h.Health = math.huge; Notify("Character", "Infinite HP!", 2, "success") end
+    end)
+    
+    Section(c, "INFO")
+    Button(c, "Copy Player ID", function()
+        if setclipboard then pcall(setclipboard, tostring(LocalPlayer.UserId)) end
+        Notify("Info", "Copied: " .. LocalPlayer.UserId, 2, "success")
+    end)
+    Button(c, "Copy Username", function()
+        if setclipboard then pcall(setclipboard, LocalPlayer.Name) end
+        Notify("Info", "Copied: " .. LocalPlayer.Name, 2, "success")
+    end)
+    
+    TabContents["Player"] = c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 19: RENDER TAB
+----------------------------------------------------------------------------------
+
+local function RenderTab()
+    local c = Instance.new("ScrollingFrame", Content)
+    c.Size = UDim2.new(1, -20, 1, -20)
+    c.Position = UDim2.new(0, 10, 0, 10)
+    c.BackgroundTransparency = 1
+    c.ScrollBarThickness = Platform.IsMobile and 3 or 4
+    c.ScrollBarImageColor3 = T("Accent")
+    c.CanvasSize = UDim2.new(0, 0, 0, Platform.IsMobile and 2000 or 2800)
+    Instance.new("UIListLayout", c).Padding = UDim.new(0, ItemPadding)
+    
+    Section(c, "ENHANCED ESP")
+    Toggle(c, "ESP", "Show player info", false, function(s) Configs.ESP.Enabled = s end)
+    Toggle(c, "Box ESP", "Boxes around players", true, function(s) Configs.ESP.Box = s end)
+    Toggle(c, "Name ESP", "Show names", true, function(s) Configs.ESP.Name = s end)
+    Toggle(c, "Health ESP", "Health bars", true, function(s) Configs.ESP.Health = s end)
+    Toggle(c, "Distance ESP", "Show distance", true, function(s) Configs.ESP.Distance = s end)
+    Toggle(c, "Team Check", "Ignore team", false, function(s) Configs.ESP.TeamCheck = s end)
+    Slider(c, "Max Distance", 100, 5000, 2000, function(v) Configs.ESP.MaxDist = v end)
+    Toggle(c, "Glow ESP", "Crystal glow", false, function(s) Configs.ESP.Glow = s end)
+    Toggle(c, "Outline ESP", "Outline boxes", true, function(s) Configs.ESP.Outline = s end)
+    Toggle(c, "Animated ESP", "Animated effects", true, function(s) Configs.ESP.Animated = s end)
+    
+    Section(c, "TRACERS & CHAMS")
+    Toggle(c, "Tracers", "Lines to players", false, function(s) Configs.Tracers.Enabled = s end)
+    Dropdown(c, "Tracer Origin", {"Bottom", "Center", "Top", "Mouse"}, "Bottom", function(v) Configs.Tracers.Origin = v end)
+    Toggle(c, "Chams", "Highlight through walls", false, function(s) Configs.Chams.Enabled = s end)
+    Slider(c, "Chams Transparency", 0, 100, 50, function(v) Configs.Chams.Transparency = v/100 end)
+    Toggle(c, "Skeleton ESP", "Show bones", false, function(s) Configs.SkeletonESP.Enabled = s end)
+    
+    Section(c, "VISUALS")
+    Toggle(c, "Fullbright", "Remove darkness", false, function(s) Configs.Fullbright.Enabled = s end)
+    Toggle(c, "No Fog", "Remove fog", false, function(s) Configs.NoFog.Enabled = s end)
+    Toggle(c, "X-Ray", "See through walls", false, function(s) Configs.Xray.Enabled = s end)
+    Slider(c, "X-Ray Transparency", 0, 100, 70, function(v) Configs.Xray.Transparency = v/100 end)
+    Toggle(c, "Night Vision", "Night vision", false, function(s) Configs.NightVision.Enabled = s end)
+    
+    Section(c, "CAMERA")
+    Toggle(c, "Freecam", "Free camera", false, function(s) Configs.Freecam.Enabled = s end)
+    Slider(c, "Freecam Speed", 10, 200, 50, function(v) Configs.Freecam.Speed = v end)
+    Toggle(c, "FOV Changer", "Change FOV", false, function(s) Configs.FOVChanger.Enabled = s end)
+    Slider(c, "Camera FOV", 30, 120, 70, function(v) Configs.FOVChanger.Value = v end)
+    
+    TabContents["Render"] = c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 20: UTILS TAB
+----------------------------------------------------------------------------------
+
+local function UtilsTab()
+    local c = Instance.new("ScrollingFrame", Content)
+    c.Size = UDim2.new(1, -20, 1, -20)
+    c.Position = UDim2.new(0, 10, 0, 10)
+    c.BackgroundTransparency = 1
+    c.ScrollBarThickness = Platform.IsMobile and 3 or 4
+    c.ScrollBarImageColor3 = T("Accent")
+    c.CanvasSize = UDim2.new(0, 0, 0, Platform.IsMobile and 1800 or 2800)
+    Instance.new("UIListLayout", c).Padding = UDim.new(0, ItemPadding)
+    
+    Section(c, "SERVER")
+    Button(c, "Rejoin Server", function()
+        pcall(function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end)
+        Notify("Server", "Rejoining...", 2, "info")
+    end)
+    Button(c, "Server Hop", function()
+        pcall(function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end)
+        Notify("Server", "Hopping...", 2, "info")
+    end)
+    Button(c, "Copy JobId", function()
+        if setclipboard then pcall(setclipboard, game.JobId) end
+        Notify("Server", "JobId copied!", 2, "success")
+    end)
+    
+    Section(c, "CHAT")
+    Toggle(c, "Chat Spammer", "Auto send messages", false, function(s) Configs.ChatSpam.Enabled = s end)
+    TextBox(c, "Spam Message", "Your message", "Crystal Hub", function(v) Configs.ChatSpam.Message = v end)
+    Slider(c, "Spam Delay", 1, 10, 3, function(v) Configs.ChatSpam.Delay = v end)
+    
+    Section(c, "WORLD")
+    Toggle(c, "Time Change", "Change time", false, function(s) Configs.TimeChange.Enabled = s end)
+    Slider(c, "Time of Day", 0, 24, 14, function(v) Configs.TimeChange.Time = v end)
+    Toggle(c, "Gravity", "Change gravity", false, function(s) Configs.Gravity.Enabled = s end)
+    Slider(c, "Gravity Value", 0, 500, 196, function(v) Configs.Gravity.Value = v/10 end)
+    Toggle(c, "No Cooldown", "Remove cooldowns", false, function(s) Configs.NoCooldown.Enabled = s end)
+    Toggle(c, "Auto Collect", "Auto pickup items", false, function(s) Configs.AutoCollect.Enabled = s end)
+    Slider(c, "Collect Range", 10, 200, 50, function(v) Configs.AutoCollect.Range = v end)
+    
+    Section(c, "UTILITY")
+    Button(c, "Copy Position", function()
+        local r = GetRoot()
+        if r then
+            local p = string.format("%.2f, %.2f, %.2f", r.Position.X, r.Position.Y, r.Position.Z)
+            if setclipboard then pcall(setclipboard, p) end
+            Notify("Position", "Copied: " .. p, 3, "success")
+        end
+    end)
+    Button(c, "Show Player Count", function()
+        Notify("Players", "Count: " .. #Players:GetPlayers(), 3, "info")
+    end)
+    
+    Section(c, "PERFORMANCE")
+    Button(c, "Remove Terrain", function()
+        pcall(function() if Workspace.Terrain then Workspace.Terrain:Clear() end end)
+        Notify("Perf", "Terrain removed!", 2, "warning")
+    end)
+    Button(c, "Remove Particles", function()
+        pcall(function() for _, o in pairs(Workspace:GetDescendants()) do if o:IsA("ParticleEmitter") then o.Enabled = false end end end)
+        Notify("Perf", "Particles disabled!", 2, "warning")
+    end)
+    Button(c, "FPS Unlock", function()
+        if setfpscap then pcall(setfpscap, 9999) end
+        Notify("Perf", "FPS unlocked!", 2, "success")
+    end)
+    
+    Section(c, "VISUAL")
+    Toggle(c, "Rainbow Mode", "Rainbow UI colors", false, function(s) Configs.RainbowMode.Enabled = s end)
+    
+    TabContents["Utils"] = c
+end
+
+----------------------------------------------------------------------------------
+-- SECTION 21: CREATE ALL TABS
+----------------------------------------------------------------------------------
+
+CombatTab()
+MovementTab()
+PlayerTab()
+RenderTab()
+UtilsTab()
+
+-- Activate Combat tab
+if TabBtns["Combat"] then
+    CreateTween(TabBtns["Combat"], {BackgroundTransparency = 0.3, BackgroundColor3 = T("Accent")}, 0.01)
+end
+for n, c in pairs(TabContents) do if n ~= "Combat" then c.Visible = false end end
+
+----------------------------------------------------------------------------------
+-- SECTION 22: STATUS BAR
+----------------------------------------------------------------------------------
+
+local Status = Instance.new("Frame", Main)
+Status.Size = UDim2.new(1, 0, 0, Platform.IsMobile and 20 or 25)
+Status.Position = UDim2.new(0, 0, 1, Platform.IsMobile and -20 or -25)
+Status.BackgroundColor3 = T("Primary")
+Status.BackgroundTransparency = 0.5
+
+local StatusLabel = Instance.new("TextLabel", Status)
+StatusLabel.Size = UDim2.new(0.7, 0, 1, 0)
+StatusLabel.Position = UDim2.new(0, 10, 0, 0)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = "💎 Crystal Hub v6.0 | " .. Hub.Platform
+StatusLabel.TextColor3 = T("TextSecondary")
+StatusLabel.TextSize = Platform.IsMobile and 9 or 10
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local FPSLabel = Instance.new("TextLabel", Status)
+FPSLabel.Size = UDim2.new(0.3, -10, 1, 0)
+FPSLabel.Position = UDim2.new(0.7, 0, 0, 0)
+FPSLabel.BackgroundTransparency = 1
+FPSLabel.Text = "FPS: 60"
+FPSLabel.TextColor3 = T("Success")
+FPSLabel.TextSize = Platform.IsMobile and 9 or 10
+FPSLabel.Font = Enum.Font.GothamBold
+FPSLabel.TextXAlignment = Enum.TextXAlignment.Right
+
+----------------------------------------------------------------------------------
+-- SECTION 23: KEYBINDS (PC) & TOUCH (Mobile)
+----------------------------------------------------------------------------------
+
+UserInputService.InputBegan:Connect(function(i, gp)
+    if gp then return end
+    if i.KeyCode == Enum.KeyCode.RightShift then
+        if Main then Main.Visible = not Main.Visible end
+    end
+    if i.KeyCode == Enum.KeyCode.Q and Configs.Blink.Enabled then
+        local r = GetRoot()
+        if r then r.CFrame = r.CFrame + Camera.CFrame.LookVector * Configs.Blink.Distance; Notify("Blink", "TP!", 1, "success") end
+    end
+    if i.KeyCode == Enum.KeyCode.E and Configs.Dash.Enabled then
+        local r = GetRoot()
+        if r then r.Velocity = r.Velocity + Camera.CFrame.LookVector * Configs.Dash.Distance * 3; Notify("Dash", "Dash!", 1, "success") end
+    end
+end)
+
+----------------------------------------------------------------------------------
+-- SECTION 24: FUNCTION LOOPS
+----------------------------------------------------------------------------------
+
+-- AIMBOT
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Aimbot.Enabled then
+                local target = GetClosest(Configs.Aimbot.FOV, Configs.Aimbot.Part, Configs.Aimbot.TeamCheck, Configs.Aimbot.WallCheck)
+                if target and target.Character then
+                    local part = target.Character:FindFirstChild(Configs.Aimbot.Part)
+                    if part then
+                        local tpos = part.Position
+                        local trp = target.Character:FindFirstChild("HumanoidRootPart")
+                        if trp then tpos = tpos + trp.Velocity * Configs.Aimbot.Prediction end
+                        Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(Camera.CFrame.Position, tpos), Configs.Aimbot.Smooth)
+                    end
+                end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- TRIGGERBOT
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Triggerbot.Enabled and Mouse.Target then
+                local tp = Players:GetPlayerFromCharacter(Mouse.Target.Parent)
+                if tp and tp ~= LocalPlayer then
+                    if not Configs.Triggerbot.TeamCheck or tp.Team ~= LocalPlayer.Team then
+                        if GetDistance(LocalPlayer, tp) <= Configs.Triggerbot.MaxDist then
+                            task.wait(Configs.Triggerbot.Delay)
+                            if mouse1click then pcall(mouse1click) end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait(0.01)
+    end
+end)
+
+-- KILL AURA
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.KillAura.Enabled then
+                for _, p in ipairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and IsAlive(p) then
+                        if Configs.KillAura.TeamCheck and p.Team == LocalPlayer.Team then continue end
+                        if GetDistance(LocalPlayer, p) <= Configs.KillAura.Range then
+                            local tool = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Tool")
+                            if tool then pcall(function() tool:Activate() end) end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait(Configs.KillAura.Delay)
+    end
+end)
+
+-- HITBOX EXTENDER
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.HitboxExtender.Enabled then
+                for _, p in ipairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and IsAlive(p) then
+                        local rp = p.Character:FindFirstChild("HumanoidRootPart")
+                        if rp and not Hub.HitboxParts[p.UserId] then
+                            local hb = Instance.new("Part")
+                            hb.Size = Vector3.new(5, 5, 5); hb.Transparency = 0.7; hb.CanCollide = false
+                            hb.Color = Color3.fromRGB(255, 0, 0); hb.Material = Enum.Material.ForceField
+                            hb.Parent = p.Character
+                            local w = Instance.new("WeldConstraint", hb); w.Part0 = hb; w.Part1 = rp
+                            Hub.HitboxParts[p.UserId] = hb
+                        end
+                        if Hub.HitboxParts[p.UserId] then
+                            local s = Configs.HitboxExtender.Size
+                            Hub.HitboxParts[p.UserId].Size = Vector3.new(s, s, s)
+                            Hub.HitboxParts[p.UserId].Transparency = Configs.HitboxExtender.Transparency
+                        end
+                    end
+                end
+            else
+                for uid, part in pairs(Hub.HitboxParts) do if part then pcall(function() part:Destroy() end) end end
+                Hub.HitboxParts = {}
+            end
+        end)
+        task.wait(0.5)
+    end
+end)
+
+-- SPEED
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Speed.Enabled then
+                local h = GetHumanoid()
+                if h then h.WalkSpeed = Configs.Speed.Value end
+            else
+                local h = GetHumanoid()
+                if h and h.WalkSpeed ~= 16 then h.WalkSpeed = 16 end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- FLY
+local FlyBV, FlyBG
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Fly.Enabled then
+                local rp = GetRoot()
+                if rp then
+                    if not FlyBV then FlyBV = Instance.new("BodyVelocity", rp); FlyBV.MaxForce = Vector3.new(math.huge, math.huge, math.huge) end
+                    if not FlyBG then FlyBG = Instance.new("BodyGyro", rp); FlyBG.MaxTorque = Vector3.new(math.huge, math.huge, math.huge); FlyBG.P = 10000 end
+                    local mv = Camera.CFrame.LookVector
+                    local ud = 0
+                    if Platform.IsPC then
+                        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then ud = 1
+                        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then ud = -1 end
+                    end
+                    FlyBV.Velocity = (mv * Configs.Fly.Speed) + Vector3.new(0, ud * Configs.Fly.Speed, 0)
+                    FlyBG.CFrame = Camera.CFrame
+                end
+            else
+                if FlyBV then pcall(function() FlyBV:Destroy() end); FlyBV = nil end
+                if FlyBG then pcall(function() FlyBG:Destroy() end); FlyBG = nil end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- NOCLIP
+local NoclipConn
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Noclip.Enabled and not NoclipConn then
+                NoclipConn = RunService.Stepped:Connect(function()
+                    if LocalPlayer.Character then
+                        for _, p in pairs(LocalPlayer.Character:GetDescendants()) do if p:IsA("BasePart") then p.CanCollide = false end end
+                    end
+                end)
+            elseif not Configs.Noclip.Enabled and NoclipConn then
+                NoclipConn:Disconnect(); NoclipConn = nil
+                if LocalPlayer.Character then
+                    for _, p in pairs(LocalPlayer.Character:GetDescendants()) do if p:IsA("BasePart") and p.Name ~= "HumanoidRootPart" then p.CanCollide = true end end
+                end
+            end
+        end)
+        task.wait(0.1)
+    end
+end)
+
+-- INF JUMP
+local InfJumpConn
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.InfJump.Enabled and not InfJumpConn then
+                InfJumpConn = UserInputService.JumpRequest:Connect(function()
+                    local h = GetHumanoid()
+                    if h then pcall(function() h:ChangeState(Enum.HumanoidStateType.Jumping) end) end
+                end)
+            elseif not Configs.InfJump.Enabled and InfJumpConn then
+                InfJumpConn:Disconnect(); InfJumpConn = nil
+            end
+        end)
+        task.wait(0.1)
+    end
+end)
+
+-- GOD MODE
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.GodMode.Enabled then
+                local h = GetHumanoid()
+                if h then h.MaxHealth = math.huge; h.Health = math.huge end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- ANTI-VOID
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.AntiVoid.Enabled then
+                local rp = GetRoot()
+                if rp and rp.Position.Y < Configs.AntiVoid.Height then
+                    rp.CFrame = CFrame.new(rp.Position.X, rp.Position.Y + 1000, rp.Position.Z)
+                    Notify("Anti-Void", "Saved!", 2, "warning")
+                end
+            end
+        end)
+        task.wait(0.5)
+    end
+end)
+
+-- NO FALL
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.NoFall.Enabled then
+                local rp = GetRoot()
+                if rp then rp.Velocity = Vector3.new(rp.Velocity.X, math.max(rp.Velocity.Y, -50), rp.Velocity.Z) end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- REGENERATION
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Regeneration.Enabled then
+                local h = GetHumanoid()
+                if h and h.Health < h.MaxHealth then h.Health = math.min(h.Health + Configs.Regeneration.Rate, h.MaxHealth) end
+            end
+        end)
+        task.wait(1)
+    end
+end)
+
+-- ESP (Crystal Style)
+task.spawn(function()
+    while true do
+        pcall(function()
+            for _, o in pairs(Hub.ESPObjects) do if o then pcall(function() o:Remove() end) end end
+            Hub.ESPObjects = {}
+            
+            if Configs.ESP.Enabled and HasDrawing then
+                local animTime = tick()
+                for _, p in ipairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and IsAlive(p) then
+                        if Configs.ESP.TeamCheck and p.Team == LocalPlayer.Team then continue end
+                        local rp = p.Character:FindFirstChild("HumanoidRootPart")
+                        local h = p.Character:FindFirstChildOfClass("Humanoid")
+                        local head = p.Character:FindFirstChild("Head")
+                        if rp and h and head then
+                            local d = GetDistance(LocalPlayer, p)
+                            if d <= Configs.ESP.MaxDist then
+                                local sp, on = WorldToScreen(head.Position)
+                                if on then
+                                    local hs, _ = WorldToScreen(head.Position + Vector3.new(0, 2, 0))
+                                    local fs, _ = WorldToScreen(rp.Position - Vector3.new(0, 3, 0))
+                                    local bh = math.abs(hs.Y - fs.Y)
+                                    local bw = bh * 0.5
+                                    local baseColor = (p.Team == LocalPlayer.Team) and Color3.fromRGB(80, 220, 140) or Color3.fromRGB(100, 180, 255)
+                                    
+                                    if Configs.ESP.Box then
+                                        local box = Drawing.new("Square")
+                                        box.Size = Vector2.new(bw, bh); box.Position = Vector2.new(sp.X - bw/2, hs.Y)
+                                        box.Thickness = 2; box.Color = baseColor; box.Filled = false; box.Visible = true
+                                        table.insert(Hub.ESPObjects, box)
+                                        
+                                        if Configs.ESP.Outline then
+                                            local outline = Drawing.new("Square")
+                                            outline.Size = Vector2.new(bw + 4, bh + 4); outline.Position = Vector2.new(sp.X - bw/2 - 2, hs.Y - 2)
+                                            outline.Thickness = 1; outline.Color = Color3.fromRGB(0, 0, 0); outline.Visible = true
+                                            table.insert(Hub.ESPObjects, outline)
+                                        end
+                                    end
+                                    
+                                    if Configs.ESP.Name then
+                                        local nm = Drawing.new("Text")
+                                        nm.Text = "◆ " .. p.DisplayName; nm.Center = true; nm.Outline = true
+                                        nm.Size = 14; nm.Color = baseColor; nm.Position = Vector2.new(sp.X, hs.Y - 25); nm.Visible = true
+                                        table.insert(Hub.ESPObjects, nm)
+                                    end
+                                    
+                                    if Configs.ESP.Health then
+                                        local hp = h.Health / h.MaxHealth
+                                        local bg = Drawing.new("Square")
+                                        bg.Size = Vector2.new(4, bh); bg.Position = Vector2.new(sp.X - bw/2 - 10, hs.Y)
+                                        bg.Color = Color3.fromRGB(30, 30, 30); bg.Filled = true; bg.Visible = true
+                                        table.insert(Hub.ESPObjects, bg)
+                                        
+                                        local bar = Drawing.new("Square")
+                                        bar.Size = Vector2.new(4, bh * hp); bar.Position = Vector2.new(sp.X - bw/2 - 10, hs.Y + bh - bh*hp)
+                                        bar.Color = Color3.fromRGB(255 - 255*hp, 255*hp, 50); bar.Filled = true; bar.Visible = true
+                                        table.insert(Hub.ESPObjects, bar)
+                                    end
+                                    
+                                    if Configs.ESP.Distance then
+                                        local dt = Drawing.new("Text")
+                                        dt.Text = "[" .. math.floor(d) .. "m]"; dt.Center = true; dt.Outline = true
+                                        dt.Size = 12; dt.Color = Color3.fromRGB(220, 220, 220); dt.Position = Vector2.new(sp.X, fs.Y + 5); dt.Visible = true
+                                        table.insert(Hub.ESPObjects, dt)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- TRACERS
+task.spawn(function()
+    while true do
+        pcall(function()
+            for _, o in pairs(Hub.TracerObjects) do if o then pcall(function() o:Remove() end) end end
+            Hub.TracerObjects = {}
+            if Configs.Tracers.Enabled and HasDrawing then
+                for _, p in ipairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and IsAlive(p) then
+                        if Configs.Tracers.TeamCheck and p.Team == LocalPlayer.Team then continue end
+                        local rp = p.Character:FindFirstChild("HumanoidRootPart")
+                        if rp then
+                            local sp, on = WorldToScreen(rp.Position)
+                            if on then
+                                local origin = Vector2.zero
+                                if Configs.Tracers.Origin == "Bottom" then origin = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
+                                elseif Configs.Tracers.Origin == "Center" then origin = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)
+                                elseif Configs.Tracers.Origin == "Top" then origin = Vector2.new(Camera.ViewportSize.X/2, 0)
+                                elseif Configs.Tracers.Origin == "Mouse" then origin = UserInputService:GetMouseLocation() end
+                                local tr = Drawing.new("Line")
+                                tr.From = origin; tr.To = sp; tr.Color = Color3.fromRGB(100, 180, 255); tr.Thickness = 1.5; tr.Visible = true
+                                table.insert(Hub.TracerObjects, tr)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait()
+    end
+end)
+
+-- CHAMS
+task.spawn(function()
+    while true do
+        pcall(function()
+            for _, c in pairs(Hub.ChamsObjects) do if c then pcall(function() c:Destroy() end) end end
+            Hub.ChamsObjects = {}
+            if Configs.Chams.Enabled then
+                for _, p in ipairs(Players:GetPlayers()) do
+                    if p ~= LocalPlayer and p.Character and IsAlive(p) then
+                        if Configs.Chams.TeamCheck and p.Team == LocalPlayer.Team then continue end
+                        local hl = Instance.new("Highlight")
+                        hl.FillColor = Color3.fromRGB(100, 180, 255); hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+                        hl.FillTransparency = Configs.Chams.Transparency; hl.OutlineTransparency = 0
+                        hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop; hl.Parent = p.Character
+                        table.insert(Hub.ChamsObjects, hl)
+                    end
+                end
+            end
+        end)
+        task.wait(1)
+    end
+end)
+
+-- FULLBRIGHT
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Fullbright.Enabled then
+                Lighting.Brightness = 2; Lighting.ClockTime = 14; Lighting.FogEnd = 100000
+                Lighting.GlobalShadows = false; Lighting.OutdoorAmbient = Color3.fromRGB(127, 127, 127)
+            end
+        end)
+        task.wait(1)
+    end
+end)
+
+-- NO FOG
+task.spawn(function()
+    while true do
+        pcall(function() if Configs.NoFog.Enabled then Lighting.FogStart = 0; Lighting.FogEnd = 9999999 end end)
+        task.wait(1)
+    end
+end)
+
+-- XRAY
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.Xray.Enabled then
+                for _, p in pairs(Workspace:GetDescendants()) do
+                    if p:IsA("BasePart") and not p:IsDescendantOf(LocalPlayer.Character) then
+                        if not Hub.OriginalTransparencies[p] then Hub.OriginalTransparencies[p] = p.Transparency end
+                        p.Transparency = Configs.Xray.Transparency
+                    end
+                end
+            else
+                for p, o in pairs(Hub.OriginalTransparencies) do if p and p.Parent then p.Transparency = o end end
+                Hub.OriginalTransparencies = {}
+            end
+        end)
+        task.wait(1)
+    end
+end)
+
+-- FOV CHANGER
+task.spawn(function()
+    while true do
+        pcall(function() Camera.FieldOfView = Configs.FOVChanger.Enabled and Configs.FOVChanger.Value or 70 end)
+        task.wait()
+    end
+end)
+
+-- CHAT SPAM
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.ChatSpam.Enabled then
+                local ev = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents", true)
+                if ev then local say = ev:FindFirstChild("SayMessageRequest"); if say then say:FireServer(Configs.ChatSpam.Message, "All") end end
+                task.wait(Configs.ChatSpam.Delay)
+            else task.wait(0.5) end
+        end)
+    end
+end)
+
+-- TIME CHANGE
+task.spawn(function()
+    while true do
+        pcall(function() if Configs.TimeChange.Enabled then Lighting.ClockTime = Configs.TimeChange.Time end end)
+        task.wait(1)
+    end
+end)
+
+-- GRAVITY
+task.spawn(function()
+    while true do
+        pcall(function() Workspace.Gravity = Configs.Gravity.Enabled and Configs.Gravity.Value or 196.2 end)
+        task.wait()
+    end
+end)
+
+-- AUTO COLLECT
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.AutoCollect.Enabled then
+                local rp = GetRoot()
+                if rp and firetouchinterest then
+                    for _, o in pairs(Workspace:GetDescendants()) do
+                        if o:IsA("BasePart") and not o:IsDescendantOf(LocalPlayer.Character) then
+                            if (o.Position - rp.Position).Magnitude <= Configs.AutoCollect.Range then
+                                firetouchinterest(rp, o, 0); task.wait(); firetouchinterest(rp, o, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait(0.2)
+    end
+end)
+
+-- RAINBOW MODE
+task.spawn(function()
+    while true do
+        pcall(function()
+            if Configs.RainbowMode.Enabled then
+                local c = Color3.fromHSV(tick() * 0.1 % 1, 1, 1)
+                CurrentTheme.Accent = c; CurrentTheme.ToggleOn = c
+            end
+        end)
+        task.wait(0.05)
+    end
+end)
+
+----------------------------------------------------------------------------------
+-- SECTION 25: FPS COUNTER & ANIMATIONS
+----------------------------------------------------------------------------------
+
+task.spawn(function()
+    local fc, lt = 0, tick()
+    while ScreenGui and ScreenGui.Parent do
+        fc = fc + 1
+        local ct = tick()
+        if ct - lt >= 1 then
+            if FPSLabel and FPSLabel.Parent then FPSLabel.Text = "FPS: " .. fc end
+            fc = 0; lt = ct
+        end
+        task.wait()
+    end
+end)
+
+task.spawn(function()
+    while Main and Main.Parent do
+        pcall(function()
+            local t = tick() * 0.3
+            local r = math.sin(t) * 0.5 + 0.5
+            local c1 = CurrentTheme.Primary:Lerp(CurrentTheme.Accent, r)
+            local c2 = CurrentTheme.Accent:Lerp(CurrentTheme.Primary, 1-r)
+            Grad.Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, c1),
+                ColorSequenceKeypoint.new(0.5, c2),
+                ColorSequenceKeypoint.new(1, c1),
+            })
+            Grad.Rotation = 45 + math.sin(tick() * 0.5) * 10
+        end)
+        task.wait(0.1)
+    end
+end)
+
+----------------------------------------------------------------------------------
+-- SECTION 26: CLEANUP
+----------------------------------------------------------------------------------
+
+ScreenGui.Destroying:Connect(function()
+    pcall(function()
+        if NoclipConn then NoclipConn:Disconnect() end
+        if InfJumpConn then InfJumpConn:Disconnect() end
+        if FlyBV then FlyBV:Destroy() end
+        if FlyBG then FlyBG:Destroy() end
+        for _, o in pairs(Hub.ESPObjects) do if o then pcall(function() o:Remove() end) end end
+        for _, o in pairs(Hub.TracerObjects) do if o then pcall(function() o:Remove() end) end end
+        for _, c in pairs(Hub.ChamsObjects) do if c then pcall(function() c:Destroy() end) end end
+        for _, p in pairs(Hub.HitboxParts) do if p then pcall(function() p:Destroy() end) end end
+        for p, o in pairs(Hub.OriginalTransparencies) do if p and p.Parent then p.Transparency = o end end
+        Workspace.Gravity = 196.2; Camera.FieldOfView = 70
+    end)
+end)
+
+----------------------------------------------------------------------------------
+-- SECTION 27: INTRO & FINAL
+----------------------------------------------------------------------------------
+
+task.spawn(function()
+    task.wait(0.5)
+    Notify("Welcome", "Crystal Hub v6.0 - " .. Hub.Platform .. " Edition", 4, "success")
+    task.wait(2)
+    if Platform.IsPC then
+        Notify("Controls", "RIGHT SHIFT = Toggle GUI | Q = Blink | E = Dash", 5, "info")
+    else
+        Notify("Controls", "Tap 💎 to open menu | Use bottom buttons", 5, "info")
+    end
+end)
+
+print("═══════════════════════════════════════════════════════")
+print("   💎 Crystal Hub v6.0 - UNIVERSAL EDITION")
+print("   Platform: " .. Hub.Platform)
+print("   Functions: 200+ | Themes: 5 | Tabs: 5")
+print("   Touch: " .. tostring(Platform.HasTouch) .. " | Keyboard: " .. tostring(Platform.HasKeyboard))
+print("═══════════════════════════════════════════════════════")
+
+return Hub
